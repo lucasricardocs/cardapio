@@ -1,36 +1,38 @@
+import streamlit as st
 import requests
 from bs4 import BeautifulSoup
 import hashlib
-import time
-import os
+import pandas as pd
 from datetime import datetime
-from winotify import Notification
-from dotenv import load_dotenv
+import time
+
+# Configuração da página
+st.set_page_config(
+    page_title="Monitor de Sites",
+    page_icon="🔍",
+    layout="wide"
+)
 
 class MonitorSite:
     def __init__(self):
-        load_dotenv()
-        self.url = os.getenv("URL_MONITORAR", "https://example.com")
-        self.intervalo = int(os.getenv("INTERVALO_SEGUNDOS", "300"))  # 5 minutos padrão
-        self.hash_anterior = None
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'
         }
-        
-    def obter_conteudo_site(self):
-        """Obtém o conteúdo do site e retorna o hash MD5"""
+    
+    def verificar_site(self, url):
+        """Verifica o site e retorna hash do conteúdo"""
         try:
             # Adiciona timestamp para evitar cache
             timestamp = int(time.time())
-            url_com_cache = f"{self.url}?v={timestamp}"
+            url_com_cache = f"{url}?v={timestamp}"
             
             response = requests.get(url_com_cache, headers=self.headers, timeout=10)
             
             if response.status_code == 200:
-                # Parse do HTML para extrair apenas o conteúdo relevante
+                # Parse do HTML
                 soup = BeautifulSoup(response.text, 'html.parser')
                 
-                # Remove scripts e estilos que podem mudar sem afetar o conteúdo
+                # Remove scripts e estilos
                 for script in soup(["script", "style"]):
                     script.decompose()
                 
@@ -39,116 +41,291 @@ class MonitorSite:
                 
                 # Gera hash MD5 do conteúdo
                 hash_conteudo = hashlib.md5(conteudo.encode('utf-8')).hexdigest()
-                return hash_conteudo, True
+                
+                return hash_conteudo, True, "OK", conteudo[:200]
             else:
-                print(f"Erro HTTP {response.status_code} ao acessar {self.url}")
-                return None, False
+                return None, False, f"Erro HTTP {response.status_code}", ""
                 
         except requests.exceptions.RequestException as e:
-            print(f"Erro ao acessar o site: {e}")
-            return None, False
-    
-    def enviar_notificacao_windows(self, mensagem):
-        """Envia notificação do Windows"""
-        try:
-            notificacao = Notification(
-                app_id="Monitor de Site",
-                title="Site Atualizado!",
-                msg=mensagem,
-                duration="long",
-                icon=None
-            )
-            notificacao.show()
-            print("Notificação enviada!")
+            return None, False, f"Erro de conexão: {str(e)}", ""
         except Exception as e:
-            print(f"Erro ao enviar notificação: {e}")
+            return None, False, f"Erro inesperado: {str(e)}", ""
     
-    def enviar_notificacao_telegram(self, mensagem):
-        """Envia notificação via Telegram (opcional)"""
-        token = os.getenv("TELEGRAM_TOKEN")
-        chat_id = os.getenv("TELEGRAM_CHAT_ID")
-        
-        if token and chat_id:
-            try:
-                url_telegram = f"https://api.telegram.org/bot{token}/sendMessage"
-                dados = {
-                    'chat_id': chat_id,
-                    'text': mensagem
-                }
-                response = requests.post(url_telegram, data=dados)
-                if response.status_code == 200:
-                    print("Notificação Telegram enviada!")
-                else:
-                    print("Erro ao enviar notificação Telegram")
-            except Exception as e:
-                print(f"Erro no Telegram: {e}")
-    
-    def salvar_log(self, mensagem):
-        """Salva log das verificações"""
+    def salvar_historico(self, url, status, detalhes=""):
+        """Salva o histórico de verificações"""
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        with open("monitor_log.txt", "a", encoding="utf-8") as arquivo:
-            arquivo.write(f"[{timestamp}] {mensagem}\n")
+        
+        if 'historico' not in st.session_state:
+            st.session_state.historico = []
+        
+        st.session_state.historico.append({
+            'Timestamp': timestamp,
+            'URL': url,
+            'Status': status,
+            'Detalhes': detalhes[:100] + "..." if len(detalhes) > 100 else detalhes
+        })
+        
+        # Manter apenas os últimos 50 registros
+        if len(st.session_state.historico) > 50:
+            st.session_state.historico = st.session_state.historico[-50:]
+
+def enviar_notificacao(url, timestamp):
+    """Envia notificação compatível com Streamlit Cloud"""
+    # Notificação visual no Streamlit
+    st.success(f"🚨 **SITE ATUALIZADO!**")
+    st.write(f"**URL:** {url}")
+    st.write(f"**Horário:** {timestamp}")
     
-    def iniciar_monitoramento(self):
-        """Inicia o monitoramento contínuo do site"""
-        print(f"Iniciando monitoramento de: {self.url}")
-        print(f"Intervalo de verificação: {self.intervalo} segundos")
+    # Efeito visual
+    st.balloons()
+    
+    # Toast notification
+    st.toast("Site atualizado!", icon="🚨")
+
+def main():
+    st.title("🔍 Monitor de Sites em Tempo Real")
+    st.markdown("Sistema de monitoramento que verifica atualizações em sites a cada 60 segundos")
+    st.markdown("---")
+    
+    monitor = MonitorSite()
+    
+    # Inicializar session state
+    if "monitoramento_ativo" not in st.session_state:
+        st.session_state.monitoramento_ativo = False
+    if "url_monitorar" not in st.session_state:
+        st.session_state.url_monitorar = "https://example.com"
+    if "hash_anterior" not in st.session_state:
+        st.session_state.hash_anterior = None
+    if "historico" not in st.session_state:
+        st.session_state.historico = []
+    if "contador_verificacoes" not in st.session_state:
+        st.session_state.contador_verificacoes = 0
+    if "ultima_atualizacao" not in st.session_state:
+        st.session_state.ultima_atualizacao = None
+    
+    # Sidebar para configurações
+    with st.sidebar:
+        st.header("⚙️ Configurações")
         
-        # Primeira verificação para estabelecer baseline
-        hash_atual, sucesso = self.obter_conteudo_site()
-        if sucesso:
-            self.hash_anterior = hash_atual
-            mensagem = f"Monitoramento iniciado para {self.url}"
-            print(mensagem)
-            self.salvar_log(mensagem)
+        # URL para monitorar
+        url_input = st.text_input(
+            "URL para monitorar:",
+            value=st.session_state.url_monitorar,
+            help="Digite a URL completa do site que deseja monitorar"
+        )
+        st.session_state.url_monitorar = url_input
+        
+        # Intervalo de verificação
+        intervalo = st.selectbox(
+            "Intervalo de verificação:",
+            [30, 60, 120, 300, 600],
+            index=1,
+            format_func=lambda x: f"{x//60} minutos" if x >= 60 else f"{x} segundos"
+        )
+        
+        st.info(f"🕐 Verificação a cada {intervalo} segundos")
+        
+        # Botões de controle
+        st.markdown("---")
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            if st.button("▶️ Iniciar", type="primary", use_container_width=True):
+                st.session_state.monitoramento_ativo = True
+                st.session_state.hash_anterior = None  # Reset para nova baseline
+                st.success("✅ Monitoramento iniciado!")
+        
+        with col2:
+            if st.button("⏹️ Parar", use_container_width=True):
+                st.session_state.monitoramento_ativo = False
+                st.info("⏸️ Monitoramento pausado")
+        
+        # Verificação manual
+        if st.button("🔄 Verificação Manual", use_container_width=True):
+            hash_atual, sucesso, mensagem, preview = monitor.verificar_site(st.session_state.url_monitorar)
+            if sucesso:
+                st.success("✅ Verificação manual concluída")
+                monitor.salvar_historico(st.session_state.url_monitorar, "Verificação Manual", preview)
+            else:
+                st.error(f"❌ {mensagem}")
+        
+        # Botão para limpar histórico
+        if st.button("🗑️ Limpar Histórico"):
+            st.session_state.historico = []
+            st.session_state.contador_verificacoes = 0
+            st.success("Histórico limpo!")
+    
+    # Área principal
+    col1, col2 = st.columns([2, 1])
+    
+    with col1:
+        st.subheader("📊 Status do Monitoramento")
+        status_container = st.empty()
+        
+    with col2:
+        st.subheader("📈 Estatísticas")
+        
+        # Métricas
+        if st.session_state.historico:
+            df_historico = pd.DataFrame(st.session_state.historico)
+            total_verificacoes = len(df_historico)
+            atualizacoes_detectadas = len(df_historico[df_historico['Status'] == 'ATUALIZAÇÃO DETECTADA'])
+            erros = len(df_historico[df_historico['Status'].str.contains('Erro', na=False)])
+            
+            st.metric("Total de Verificações", total_verificacoes)
+            st.metric("Atualizações Detectadas", atualizacoes_detectadas)
+            st.metric("Erros", erros)
+            
+            if st.session_state.ultima_atualizacao:
+                st.metric("Última Atualização", st.session_state.ultima_atualizacao.strftime("%H:%M:%S"))
         else:
-            print("Erro na verificação inicial. Tentando novamente...")
+            st.metric("Total de Verificações", 0)
+            st.metric("Atualizações Detectadas", 0)
+            st.metric("Erros", 0)
+    
+    # Fragment para monitoramento automático
+    if st.session_state.monitoramento_ativo:
+        run_every = intervalo
+    else:
+        run_every = None
+    
+    @st.fragment(run_every=run_every)
+    def monitorar_site():
+        if not st.session_state.monitoramento_ativo:
+            return
         
-        while True:
-            try:
-                time.sleep(self.intervalo)
+        url = st.session_state.url_monitorar
+        hash_atual, sucesso, mensagem, preview = monitor.verificar_site(url)
+        timestamp = datetime.now()
+        
+        st.session_state.contador_verificacoes += 1
+        
+        if sucesso:
+            if st.session_state.hash_anterior is None:
+                # Primeira verificação - estabelecer baseline
+                st.session_state.hash_anterior = hash_atual
+                status = "Baseline Estabelecido"
                 
-                hash_atual, sucesso = self.obter_conteudo_site()
+                with status_container:
+                    st.info(f"📝 **Baseline estabelecido**")
+                    st.write(f"**Horário:** {timestamp.strftime('%d/%m/%Y às %H:%M:%S')}")
+                    st.write(f"**URL:** {url}")
+                    st.write(f"**Verificações:** {st.session_state.contador_verificacoes}")
                 
-                if sucesso:
-                    if self.hash_anterior is None:
-                        # Primeira verificação bem-sucedida
-                        self.hash_anterior = hash_atual
-                        mensagem = f"Baseline estabelecido para {self.url}"
-                        print(mensagem)
-                        self.salvar_log(mensagem)
-                    
-                    elif hash_atual != self.hash_anterior:
-                        # Detectou mudança!
-                        timestamp = datetime.now().strftime("%d/%m/%Y às %H:%M:%S")
-                        mensagem = f"ATUALIZAÇÃO DETECTADA em {self.url} em {timestamp}"
-                        
-                        print("🚨 " + mensagem)
-                        self.salvar_log(mensagem)
-                        
-                        # Envia notificações
-                        self.enviar_notificacao_windows(f"{self.url} foi atualizado!")
-                        self.enviar_notificacao_telegram(mensagem)
-                        
-                        # Atualiza o hash de referência
-                        self.hash_anterior = hash_atual
-                    
-                    else:
-                        # Sem mudanças
-                        timestamp = datetime.now().strftime("%H:%M:%S")
-                        print(f"[{timestamp}] Verificação OK - Sem alterações")
+                monitor.salvar_historico(url, status, "Primeira verificação realizada")
+            
+            elif hash_atual != st.session_state.hash_anterior:
+                # ATUALIZAÇÃO DETECTADA!
+                st.session_state.hash_anterior = hash_atual
+                st.session_state.ultima_atualizacao = timestamp
+                status = "ATUALIZAÇÃO DETECTADA"
                 
-                else:
-                    print("Falha na verificação. Tentando novamente no próximo ciclo...")
-                    
-            except KeyboardInterrupt:
-                print("\nMonitoramento interrompido pelo usuário.")
-                self.salvar_log("Monitoramento interrompido pelo usuário")
-                break
-            except Exception as e:
-                print(f"Erro inesperado: {e}")
-                self.salvar_log(f"Erro inesperado: {e}")
+                with status_container:
+                    enviar_notificacao(url, timestamp.strftime('%d/%m/%Y às %H:%M:%S'))
+                    st.write(f"**Verificações:** {st.session_state.contador_verificacoes}")
+                
+                monitor.salvar_historico(url, status, preview)
+            
+            else:
+                # Sem mudanças
+                status = "Sem Alterações"
+                
+                with status_container:
+                    st.success(f"✅ **Monitoramento Ativo**")
+                    st.write(f"**Última verificação:** {timestamp.strftime('%H:%M:%S')}")
+                    st.write(f"**URL:** {url}")
+                    st.write(f"**Status:** Sem alterações detectadas")
+                    st.write(f"**Verificações:** {st.session_state.contador_verificacoes}")
+                
+                monitor.salvar_historico(url, status, "")
+        
+        else:
+            # Erro na verificação
+            status = f"Erro: {mensagem}"
+            
+            with status_container:
+                st.error(f"❌ **Erro na Verificação**")
+                st.write(f"**Horário:** {timestamp.strftime('%H:%M:%S')}")
+                st.write(f"**Erro:** {mensagem}")
+                st.write(f"**Verificações:** {st.session_state.contador_verificacoes}")
+            
+            monitor.salvar_historico(url, status, mensagem)
+    
+    # Executar o fragment
+    monitorar_site()
+    
+    # Histórico de verificações
+    st.markdown("---")
+    st.subheader("📋 Histórico de Verificações")
+    
+    if st.session_state.historico:
+        df_historico = pd.DataFrame(st.session_state.historico)
+        
+        # Filtros
+        col_filtro1, col_filtro2 = st.columns(2)
+        with col_filtro1:
+            status_filtro = st.selectbox(
+                "Filtrar por status:",
+                ["Todos"] + list(df_historico['Status'].unique())
+            )
+        
+        with col_filtro2:
+            quantidade = st.selectbox(
+                "Mostrar últimos:",
+                [10, 20, 50],
+                index=1
+            )
+        
+        # Aplicar filtros
+        if status_filtro != "Todos":
+            df_filtrado = df_historico[df_historico['Status'] == status_filtro]
+        else:
+            df_filtrado = df_historico
+        
+        # Limitar quantidade e ordenar
+        df_final = df_filtrado.tail(quantidade).sort_values('Timestamp', ascending=False)
+        
+        # Exibir tabela
+        st.dataframe(
+            df_final,
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "Timestamp": st.column_config.DatetimeColumn(
+                    "Data/Hora",
+                    format="DD/MM/YYYY HH:mm:ss"
+                ),
+                "Status": st.column_config.TextColumn(
+                    "Status",
+                    width="medium"
+                ),
+                "URL": st.column_config.LinkColumn(
+                    "URL",
+                    display_text="Link"
+                ),
+                "Detalhes": st.column_config.TextColumn(
+                    "Detalhes",
+                    width="large"
+                )
+            }
+        )
+        
+        # Download do histórico
+        if st.button("📥 Baixar Histórico CSV"):
+            csv = df_historico.to_csv(index=False)
+            st.download_button(
+                label="Download CSV",
+                data=csv,
+                file_name=f"historico_monitoramento_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                mime="text/csv"
+            )
+    
+    else:
+        st.info("Nenhuma verificação realizada ainda. Clique em 'Iniciar' para começar o monitoramento.")
+    
+    # Footer
+    st.markdown("---")
+    st.markdown("**💡 Dica:** Deixe esta aba aberta para manter o monitoramento ativo.")
 
 if __name__ == "__main__":
-    monitor = MonitorSite()
-    monitor.iniciar_monitoramento()
+    main()
