@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clips Burger - Cardápio</title>
+    <style>
+        /* --- menu_styles.css --- */
+        /* Reset e configurações globais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        /* Body/App Background */
+        html, body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%) !important;
+            color: #f8fafc;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        /* Container principal */
+        .container {
+            max-width: 100%;
+            padding: 1rem;
+            margin: 0 auto;
+        }
+        /* Logo Container com Efeito de Fogo */
+        .logo-fire-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem auto;
+            height: 280px;
+            width: 100%;
+            max-width: 400px;
+            overflow: visible !important;
+            z-index: 1;
+        }
+        /* Logo Principal - Z-INDEX ALTO E ANIMADA */
+        .fire-logo {
+            position: relative;
+            z-index: 50;
+            max-width: 200px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 0 20px rgba(255, 69, 0, 0.8));
+            animation: logoFloat 3s ease-in-out infinite;
+            display: block;
+            margin: 0 auto;
+        }
+        /* Animação de Flutuação da Logo */
+        @keyframes logoFloat {
+            0%, 100% {
+                transform: translateY(0px) scale(1);
+                filter: drop-shadow(0 0 20px rgba(255, 69, 0, 0.8));
+            }
+            50% {
+                transform: translateY(-10px) scale(1.05);
+                filter: drop-shadow(0 0 30px rgba(255, 140, 0, 1));
+            }
+        }
+        /* Container das Chamas */
+        .fire-container {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 800px; /* Increased height to allow particles to rise higher */
+            z-index: 1;
+            pointer-events: none;
+            overflow: visible !important;
+        }
+        /* Chamas Individuais */
+        .flame {
+            position: absolute;
+            bottom: 0;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            transform-origin: center bottom;
+            animation: flicker 0.5s ease-in-out infinite alternate;
+            z-index: 10;
+        }
+        /* Animação das Chamas */
+        @keyframes flicker {
+            0% { transform: translateX(-50%) rotate(-2deg) scaleY(1); opacity: 0.8; }
+            25% { transform: translateX(-50%) rotate(1deg) scaleY(1.1); opacity: 0.9; }
+            50% { transform: translateX(-50%) rotate(-1deg) scaleY(0.95); opacity: 1; }
+            75% { transform: translateX(-50%) rotate(2deg) scaleY(1.05); opacity: 0.85; }
+            100% { transform: translateX(-50%) rotate(-1deg) scaleY(1); opacity: 0.9; }
+        }
+        /* Chama Principal (Vermelha) */
+        .flame-red {
+            left: 50%; transform: translateX(-50%); width: 80px; height: 120px;
+            background: radial-gradient(circle, #ff4500 0%, #ff6347 30%, #dc143c 70%, #8b0000 100%);
+            box-shadow: 0 0 30px #ff4500, 0 0 60px #ff6347, 0 0 90px #dc143c;
+            animation: flicker 0.8s ease-in-out infinite alternate;
+        }
+        /* Chama Laranja */
+        .flame-orange {
+            left: 45%; transform: translateX(-50%); width: 60px; height: 90px;
+            background: radial-gradient(circle, #ffa500 0%, #ff8c00 50%, #ff4500 100%);
+            box-shadow: 0 0 25px #ffa500, 0 0 50px #ff8c00;
+            animation: flicker 0.6s ease-in-out infinite alternate; animation-delay: 0.2s;
+        }
+        /* Chama Amarela */
+        .flame-yellow {
+            left: 55%; transform: translateX(-50%); width: 40px; height: 70px;
+            background: radial-gradient(circle, #ffff00 0%, #ffd700 50%, #ffa500 100%);
+            box-shadow: 0 0 20px #ffff00, 0 0 40px #ffd700;
+            animation: flicker 0.4s ease-in-out infinite alternate; animation-delay: 0.4s;
+        }
+        /* Chama Branca (Centro) */
+        .flame-white {
+            left: 50%; transform: translateX(-50%); width: 25px; height: 50px;
+            background: radial-gradient(circle, #ffffff 0%, #ffff99 50%, #ffd700 100%);
+            box-shadow: 0 0 15px #ffffff, 0 0 30px #ffff99;
+            animation: flicker 0.3s ease-in-out infinite alternate; animation-delay: 0.1s;
+        }
+        /* Partículas de Fogo */
+        .fire-particle {
+            position: absolute; bottom: 0; border-radius: 50%;
+            animation: particle-rise-high linear infinite;
+            pointer-events: none; z-index: 5; opacity: 1;
+        }
+        /* Animação das Partículas */
+        @keyframes particle-rise-high {
+            0% { bottom: 0px; opacity: 1; transform: translateX(0) scale(1); }
+            10% { bottom: 50px; opacity: 1; transform: translateX(calc(var(--random-x, 0) * 0.2)) scale(0.95); }
+            25% { bottom: 150px; opacity: 0.9; transform: translateX(calc(var(--random-x, 0) * 0.5)) scale(0.85); }
+            40% { bottom: 250px; opacity: 0.7; transform: translateX(calc(var(--random-x, 0) * 0.7)) scale(0.7); }
+            60% { bottom: 400px; opacity: 0.6; transform: translateX(var(--random-x, 0)) scale(0.6); }
+            80% { bottom: 600px; opacity: 0.3; transform: translateX(calc(var(--random-x, 0) * 1.2)) scale(0.4); }
+            100% { bottom: 800px; opacity: 0; transform: translateX(calc(var(--random-x, 0) * 1.5)) scale(0.1); }
+        }
+        /* Estilos das Partículas */
+        .fire-particle.small { width: 4px; height: 4px; background: radial-gradient(circle, #ff6347 0%, #ff4500 100%); box-shadow: 0 0 8px #ff6347; }
+        .fire-particle.medium { width: 6px; height: 6px; background: radial-gradient(circle, #ffa500 0%, #ff6347 100%); box-shadow: 0 0 10px #ffa500; }
+        .fire-particle.large { width: 8px; height: 8px; background: radial-gradient(circle, #ffff00 0%, #ffa500 100%); box-shadow: 0 0 12px #ffff00; }
+        /* Configuração das Partículas (Example - JS will handle dynamic creation) */
+        /* Título do cardápio */
+        .menu-title {
+            text-align: center; font-size: 2.2rem; font-weight: 700; margin: 1.5rem 0;
+            color: #f8fafc; text-shadow: 0 2px 10px rgba(255, 69, 0, 0.8);
+        }
+        /* Navegação por categorias */
+        .menu-nav {
+            display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 0.5rem; padding: 0.5rem 0; margin-bottom: 1.5rem;
+            -webkit-overflow-scrolling: touch; scrollbar-width: none;
+        }
+        .menu-nav::-webkit-scrollbar { display: none; }
+        .menu-nav-item {
+            flex: 0 0 auto; padding: 0.75rem 1.25rem; background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+            color: #f8fafc; border-radius: 2rem; font-weight: 600; font-size: 0.9rem; text-align: center;
+            cursor: pointer; transition: all 0.2s ease; border: 1px solid #475569; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            white-space: nowrap;
+        }
+        .menu-nav-item.active {
+            background: linear-gradient(135deg, #ff4500 0%, #ff6347 100%);
+            box-shadow: 0 4px 12px rgba(255, 69, 0, 0.4); transform: translateY(-2px);
+        }
+        /* Seções do cardápio */
+        .menu-section { margin-bottom: 2.5rem; }
+        .menu-section-title {
+            font-size: 1.5rem; font-weight: 700; margin-bottom: 1.25rem; color: #f8fafc;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); display: flex; align-items: center; gap: 0.5rem;
+        }
+        .menu-section-title::before {
+            content: ''; display: block; width: 24px; height: 24px; background-size: contain; background-repeat: no-repeat;
+        }
+        .menu-section-title.hamburger::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff4500' viewBox='0 0 24 24'%3E%3Cpath d='M2 16h20v2H2v-2zm0-5h20v2H2v-2zm0-5h20v2H2V6z'/%3E%3C/svg%3E"); }
+        .menu-section-title.chicken::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff4500' viewBox='0 0 24 24'%3E%3Cpath d='M20.16 12.73C22.93 9.96 22.57 5.26 19.09 3c-.34-.22-.77-.22-1.11.01-1.14.78-2.26 1.66-3.34 2.63-.52.47-1.07.99-1.63 1.57-.29-.32-.61-.63-.96-.89-.3-.22-.69-.48-1.15-.48-.57 0-1.04.51-1.04 1.08 0 .19.05.36.12.53-1.06 1.06-2.02 2.15-2.82 3.38-2.46.71-5.39 4.32-4.76 7.35.16.72.49 1.34.95 1.84.43.47 1.27.69 1.87.13l3.22-3.22c.44-.43 1.15-.43 1.59 0 .43.44.43 1.15 0 1.59l-3.22 3.22c-.56.6-.34 1.44.13 1.87.5.46 1.12.79 1.84.95 3.03.63 6.64-2.3 7.35-4.76 1.23-.8 2.32-1.76 3.38-2.82.17.07.34.12.53.12.57 0 1.08-.47 1.08-1.04 0-.46-.26-.85-.48-1.15-.26-.35-.57-.67-.89-.96.58-.56 1.1-1.11 1.57-1.63.97-1.08 1.85-2.2 2.63-3.34.23-.34.23-.77.01-1.11-2.26-3.48-6.96-3.84-9.73-1.07-1.26-1.26-2.86-2.06-4.59-2.36-1.2-.21-2.43-.15-3.52.21-.51.16-.99.39-1.42.67-.22.14-.53.31-.66.61-.14.3-.08.68.12.94.54.7 1.37 1.02 2.2 1.03-.15.47-.23.96-.23 1.48 0 1.45.56 2.76 1.47 3.76-.45.39-.94.72-1.48.96-.87.39-1.83.59-2.79.59-.19 0-.37-.01-.56-.02-.53-.04-1.05-.15-1.56-.32-.52-.17-1.01-.4-1.48-.69L2 13.43l1.09 1.07c.38.38.78.73 1.21 1.06.75.58 1.58 1.04 2.49 1.38.91.34 1.88.51 2.89.51.32 0 .65-.02.97-.05 1.93-.19 3.73-.9 5.19-2.01.6.42 1.32.65 2.06.65 1.92 0 3.5-1.57 3.5-3.5 0-.74-.23-1.46-.65-2.06 1.11-1.46 1.82-3.26 2.01-5.19.19-1.92-.05-3.84-.69-5.65l-1.08 1.08c.58 1.29.86 2.74.75 4.22-.09 1.17-.44 2.3-1.02 3.28-.08-.05-.17-.1-.25-.15-.37-.22-.76-.41-1.17-.56.42-.7.67-1.52.67-2.39 0-1.92-1.58-3.5-3.5-3.5-.87 0-1.69.25-2.39.67-.15-.41-.34-.8-.56-1.17-.05-.08-.1-.17-.15-.25.98-.58 2.11-.93 3.28-1.02 1.48-.11 2.93.17 4.22.75L21.2 3.74c-1.81-.64-3.73-.88-5.65-.69-1.93.19-3.73.9-5.19 2.01-.6-.42-1.32-.65-2.06-.65-1.92 0-3.5 1.57-3.5 3.5 0 .74.23 1.46.65 2.06-1.11 1.46-1.82 3.26-2.01 5.19-.04.32-.05.65-.05.97 0 1.01.17 1.98.51 2.89.34.91.8 1.74 1.38 2.49.33.43.68.83 1.06 1.21l1.07 1.09 1.07-1.07c-.29-.47-.52-.96-.69-1.48-.17-.51-.28-1.03-.32-1.56-.01-.19-.02-.37-.02-.56 0-.96.2-1.92.59-2.79.24-.54.57-1.03.96-1.48 1 .91 2.31 1.47 3.76 1.47.52 0 1.01-.08 1.48-.23.01.83.33 1.66 1.03 2.2.26.2.64.26.94.12.3-.13.47-.44.61-.66.28-.43.51-.91.67-1.42.36-1.09.42-2.32.21-3.52-.3-1.73-1.1-3.33-2.36-4.59z'/%3E%3C/svg%3E"); }
+        .menu-section-title.pork::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff4500' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 10.5c0 .8-.7 1.5-1.5 1.5s-1.5-.7-1.5-1.5.7-1.5 1.5-1.5 1.5.7 1.5 1.5M8.5 10.5c0 .8-.7 1.5-1.5 1.5s-1.5-.7-1.5-1.5.7-1.5 1.5-1.5 1.5.7 1.5 1.5M12 16c-1.9 0-3.5-1-4.3-2.4l1-.6c.7 1.1 1.9 1.8 3.3 1.8s2.6-.7 3.3-1.8l1 .6c-.8 1.4-2.4 2.4-4.3 2.4M19 2H5a3 3 0 0 0-3 3v14a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V5a3 3 0 0 0-3-3m1 17a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1z'/%3E%3C/svg%3E"); }
+        .menu-section-title.beef::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff4500' viewBox='0 0 24 24'%3E%3Cpath d='M7.64 21.71a8 8 0 0 1-5.35-5.35A8.26 8.26 0 0 1 2 13.5v-3A8.5 8.5 0 0 1 10.5 2h3A8.5 8.5 0 0 1 22 10.5v3a8.26 8.26 0 0 1-.29 2.86 8 8 0 0 1-5.35 5.35A8.26 8.26 0 0 1 13.5 22h-3a8.26 8.26 0 0 1-2.86-.29M10.5 4A6.5 6.5 0 0 0 4 10.5v3a6.34 6.34 0 0 0 .22 1.67 6 6 0 0 0 4.11 4.11A6.34 6.34 0 0 0 10.5 20h3a6.34 6.34 0 0 0 1.67-.22 6 6 0 0 0 4.11-4.11A6.34 6.34 0 0 0 20 13.5v-3A6.5 6.5 0 0 0 13.5 4h-3m0 2A4.5 4.5 0 0 0 6 10.5v3a4.77 4.77 0 0 0 .17 1.5 4.5 4.5 0 0 0 3.33 3.33 4.77 4.77 0 0 0 1.5.17h3a4.77 4.77 0 0 0 1.5-.17 4.5 4.5 0 0 0 3.33-3.33A4.77 4.77 0 0 0 19 13.5v-3A4.5 4.5 0 0 0 14.5 6h-4m-.5 2h4a2.5 2.5 0 0 1 2.5 2.5v3a2.5 2.5 0 0 1-2.5 2.5h-3a2.5 2.5 0 0 1-2.5-2.5v-3A2.5 2.5 0 0 1 10 8m0 2v4h4v-4h-4z'/%3E%3C/svg%3E"); }
+        .menu-section-title.extras::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff4500' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8m-5 6h10v2H7v-2z'/%3E%3C/svg%3E"); }
+        .menu-section-title.drinks::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff4500' viewBox='0 0 24 24'%3E%3Cpath d='M7.5 7l-2-2h13l-2 2M10 3h4l1 1h-6M3 9h18v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2m6 5v5h6v-5z'/%3E%3C/svg%3E"); }
+        /* Cards de itens do cardápio */
+        .menu-items { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+        .menu-item {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%); border-radius: 1rem; padding: 1.25rem;
+            border: 1px solid #475569; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease; position: relative; overflow: hidden;
+        }
+        .menu-item:hover { transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); }
+        .menu-item-title {
+            font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; color: #f8fafc;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        .menu-item-description { font-size: 0.9rem; color: #cbd5e1; margin-bottom: 1rem; line-height: 1.4; }
+        .menu-item-price {
+            font-size: 1.3rem; font-weight: 700; color: #ff4500; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .menu-item-price::before { content: 'R$'; font-size: 0.9rem; font-weight: 600; opacity: 0.8; }
+        /* Destaque para itens populares */
+        .menu-item.popular::after {
+            content: 'POPULAR'; position: absolute; top: 1rem; right: -2rem;
+            background: linear-gradient(135deg, #ff4500 0%, #ff6347 100%); color: white;
+            font-size: 0.7rem; font-weight: 700; padding: 0.25rem 2rem; transform: rotate(45deg);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        /* Tabela de adicionais e bebidas */
+        .menu-table {
+            width: 100%; border-collapse: collapse; margin-top: 1rem;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%); border-radius: 1rem;
+            overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .menu-table th {
+            background: linear-gradient(135deg, #374151 0%, #4b5563 100%); color: #f8fafc; font-weight: 600;
+            text-align: left; padding: 1rem; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        .menu-table td { padding: 0.75rem 1rem; color: #e2e8f0; border-bottom: 1px solid #374151; }
+        .menu-table tr:last-child td { border-bottom: none; }
+        .menu-table tr:nth-child(even) { background-color: rgba(30, 41, 59, 0.5); }
+        .menu-table tr:hover { background-color: rgba(71, 85, 105, 0.4); }
+        /* Rodapé */
+        .footer {
+            margin-top: 3rem; padding: 2rem 1rem; text-align: center; color: #cbd5e1;
+            font-size: 0.9rem; border-top: 1px solid #475569;
+        }
+        .footer-logo { max-width: 100px; margin-bottom: 1rem; }
+        /* Responsividade */
+        @media screen and (min-width: 640px) { .menu-items { grid-template-columns: repeat(2, 1fr); } }
+        @media screen and (max-width: 768px) {
+            .logo-fire-container { height: 240px; max-width: 350px; }
+            .fire-logo { max-width: 180px; }
+            .fire-container { width: 250px; height: 150px; bottom: -20px; }
+        }
+        @media screen and (max-width: 480px) {
+            .logo-fire-container { height: 200px; max-width: 300px; margin: 1rem auto; }
+            .fire-logo { max-width: 150px; }
+            .fire-container { width: 200px; height: 120px; bottom: -15px; }
+            .flame-red { width: 60px; height: 90px; }
+            .flame-orange { width: 45px; height: 70px; }
+            .flame-yellow { width: 30px; height: 50px; }
+            .flame-white { width: 20px; height: 35px; }
+            .menu-title { font-size: 1.8rem; }
+            .menu-section-title { font-size: 1.3rem; }
+            .menu-item-title { font-size: 1.1rem; }
+            .menu-item-price { font-size: 1.2rem; }
+        }
+
+        /* --- menu_animations.css --- */
+        /* Estilos adicionais para animações e interatividade */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .menu-item { opacity: 0; }
+        .menu-item.animate-in { animation: fadeInUp 0.5s ease forwards; }
+        /* Atraso para animação sequencial */
+        .menu-item:nth-child(1) { animation-delay: 0.1s; }
+        .menu-item:nth-child(2) { animation-delay: 0.2s; }
+        .menu-item:nth-child(3) { animation-delay: 0.3s; }
+        .menu-item:nth-child(4) { animation-delay: 0.4s; }
+        .menu-item:nth-child(5) { animation-delay: 0.5s; }
+        .menu-item:nth-child(6) { animation-delay: 0.6s; }
+        .menu-item:nth-child(7) { animation-delay: 0.7s; }
+        .menu-item:nth-child(8) { animation-delay: 0.8s; }
+        .menu-item:nth-child(9) { animation-delay: 0.9s; }
+        /* Efeito de toque para dispositivos móveis */
+        .menu-item.touch-active { transform: scale(0.98); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        /* Animação de entrada para o corpo */
+        body { opacity: 0; transition: opacity 0.5s ease; }
+        body.loaded { opacity: 1; }
+        /* Indicador de rolagem */
+        .scroll-indicator {
+            position: fixed; bottom: 20px; right: 20px; width: 40px; height: 40px;
+            background: linear-gradient(135deg, #ff4500 0%, #ff6347 100%); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 10px rgba(255, 69, 0, 0.4);
+            opacity: 0; transition: opacity 0.3s ease, transform 0.3s ease; z-index: 100; cursor: pointer;
+        }
+        .scroll-indicator.visible { opacity: 1; }
+        .scroll-indicator:hover { transform: translateY(-2px); }
+        .scroll-indicator::after {
+            content: ''; width: 12px; height: 12px; border-right: 3px solid white; border-top: 3px solid white;
+            transform: rotate(-45deg) translate(-2px, 2px);
+        }
+        /* Melhorias na navegação */
+        .menu-nav {
+            position: sticky; top: 0; background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            z-index: 90; padding: 0.75rem 0; border-bottom: 1px solid rgba(71, 85, 105, 0.5);
+        }
+        /* Efeito de destaque para itens populares */
+        .menu-item.popular { position: relative; overflow: hidden; }
+        .menu-item.popular::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, #ff4500, #ff6347, #ff4500); background-size: 200% 100%;
+            animation: shine 2s linear infinite;
+        }
+        @keyframes shine { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        /* Melhorias de acessibilidade */
+        .menu-nav-item:focus { outline: 2px solid #ff6347; outline-offset: 2px; }
+        /* Feedback visual para toque em dispositivos móveis */
+        @media (hover: none) {
+            .menu-nav-item:active { background: linear-gradient(135deg, #ff4500 0%, #ff6347 100%); transform: scale(0.95); }
+            .menu-item:active { transform: scale(0.98); background: linear-gradient(135deg, #263449 0%, #3a4a63 100%); }
+        }
+        /* Melhorias para telas muito pequenas */
+        @media screen and (max-width: 360px) {
+            .menu-title { font-size: 1.6rem; }
+            .menu-nav-item { padding: 0.6rem 1rem; font-size: 0.8rem; }
+            .menu-section-title { font-size: 1.2rem; }
+            .menu-item-title { font-size: 1rem; }
+            .menu-item-description { font-size: 0.85rem; }
+            .menu-item-price { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Logo com Efeito de Fogo -->
+        <div class="logo-fire-container">
+            <img src="https://raw.githubusercontent.com/lucasricardocs/clips_dashboard/main/logo.png" class="fire-logo" alt="Clips Burger Logo">
+            <div class="fire-container">
+                <!-- Partículas serão adicionadas pelo JS -->
+            </div>
+        </div>
+
+        <!-- Título do Cardápio -->
+        <h1 class="menu-title">CARDÁPIO</h1>
+
+        <!-- Navegação por Categorias -->
+        <nav class="menu-nav">
+            <div class="menu-nav-item active" data-target="hamburger">Hambúrguer</div>
+            <div class="menu-nav-item" data-target="chicken">Frango</div>
+            <div class="menu-nav-item" data-target="pork">Lombo</div>
+            <div class="menu-nav-item" data-target="beef">Filé</div>
+            <div class="menu-nav-item" data-target="extras">Adicionais</div>
+            <div class="menu-nav-item" data-target="drinks">Bebidas</div>
+        </nav>
+
+        <!-- Seção Hambúrguer -->
+        <section id="hamburger" class="menu-section">
+            <h2 class="menu-section-title hamburger">Hambúrguer</h2>
+            <div class="menu-items">
+                <div class="menu-item popular">
+                    <h3 class="menu-item-title">X-Salada Simples</h3>
+                    <p class="menu-item-description">Pão, hambúrguer, presunto, muçarela, salada, milho e batata</p>
+                    <div class="menu-item-price">18,00</div>
+                </div>
+                <div class="menu-item">
+                    <h3 class="menu-item-title">X-Salada Especial</h3>
+                    <p class="menu-item-description">Pão, hambúrguer, ovo, presunto, muçarela, salada, milho e batata</p>
+                    <div class="menu-item-price">20,00</div>
+                </div>
+                <div class="menu-item">
+                    <h3 class="menu-item-title">X-Especial Duplo</h3>
+                    <p class="menu-item-description">Pão, 2 hambúrgueres, ovo, muçarela, presunto, salada, milho e batata</p>
+                    <div class="menu-item-price">24,00</div>
+                </div>
+                <div class="menu-item popular">
+                    <h3 class="menu-item-title">X-Bacon Simples</h3>
+                    <p class="menu-item-description">Pão, hambúrguer, bacon, presunto, muçarela, salada, milho e batata</p>
+                    <div class="menu-item-price">22,00</div>
+                </div>
+                <div class="menu-item">
+                    <h3 class="menu-item-title">X-Bacon Especial</h3>
+                    <p class="menu-item-description">Pão, hambúrguer, bacon, ovo, presunto, muçarela, salada, milho e batata</p>
+                    <div class="menu-item-price">24,00</div>
+                </div>
+                <div class="menu-item">
+                    <h3 class="menu-item-title">X-Bacon Especial Duplo</h3>
+                    <p class="menu-item-description">Pão, 2 hambúrgueres, bacon, ovo, presunto, muçarela, salada, milho e batata</p>
+                    <div class="menu-item-price">27,00</div>
+                </div>
+                <div class="menu-item popular">
+                    <h3 class="menu-item-title">X-Tudo</h3>
+                    <p class="menu-item-description">Pão, hambúrguer, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</p>
+                    <div class="menu-item-price">27,00</div>
+                </div>
+                <div class="menu-item">
+                    <h3 class="menu-item-title">X-Hamburgão</h3>
+                    <p class="menu-item-description">Pão, 2 hambúrgueres, bacon, ovo, 2 salsichas, presunto, muçarela, salada, milho e batata</p>
+                    <div class="menu-item-price">35,00</div>
+                </div>
+                <div class="menu-item">
+                    <h3 class="menu-item-title">X-Mata Fome</h3>
+                    <p class="menu-item-description">Pão, 2 hambúrgueres, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</p>
+                    <div class="menu-item-price">39,00</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Frango -->
+        <section id="chicken" class="menu-section">
+            <h2 class="menu-section-title chicken">Frango</h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <h3 class="menu-item-title">X-Frango Simples</h3>
+                    <p class="menu-item-description">Pão, filé de frango, presunto, muçarela, salada, milho e batata</p>
+                    <div class="menu-item-price">22,00</div>
+                </div>
+                <div class="menu-item">
+                    <h3 class="menu-item-title">X-Frango Especial</h3>
+                    <p class="menu-item-description">Pão, filé de frango, ovo, presunto, muçarela, salada, milho e batata</p>
+                    <div class="menu-item-price">24,00</div>
+                </div>
+                <div class="menu-item popular">
+                    <h3 class="menu-item-title">X-Frango Bacon</h3>
+                    <p class="menu-item-description">Pão, filé de frango, bacon, presunto, muçarela, salada, milho e batata</p>
+                    <div class="menu-item-price">27,00</div>
+                </div>
+                <div class="menu-item">
+                    <h3 class="menu-item-title">X-Frango Salsicha</h3>
+                    <p class="menu-item-description">Pão, filé de frango, salsicha, ovo, presunto, muçarela, salada, milho e batata</p>
+                    <div class="menu-item-price">27,00</div>
+                </div>
+                <div class="menu-item">
+                    <h3 class="menu-item-title">X-Frango Tudo</h3>
+                    <p class="menu-item-description">Pão, filé de frango, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</p>
+                    <div class="menu-item-price">30,00</div>
+                </div>
+                <div class="menu-item">
+                    <h3 class="menu-item-title">X-Frango Mata Fome</h3>
+                    <p class="menu-item-description">Pão, 2 filés de frango, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</p>
+                    <div class="menu-item-price">42,00</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Lombo -->
+        <section id="pork" class="menu-section">
+            <h2 class="menu-section-title pork">Lombo</h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <h3 class="menu-item-title">X-Lombo Simples</h3>
+                    <p class="menu-item-description">Pão, lombo, presunto, muçarela, salada, milho e batata</p>
+                    <div class="menu-item-price">23,00</div>
+                </div>
+                <div class="menu-item">
+                    <h3 class="menu-item-title">X-Lombo Especial</h3>
+                    <p class="menu-item-description">Pão, lombo, ovo, presunto, muçarela, salada, milho e batata</p>
+                    <div class="menu-item-price">25,00</div>
+                </div>
+                <div class="menu-item popular">
+                    <h3 class="menu-item-title">X-Lombo Bacon</h3>
+                    <p class="menu-item-description">Pão, lombo, bacon, ovo, presunto, muçarela, salada, milho e batata</p>
+                    <div class="menu-item-price">28,00</div>
+                </div>
+                <div class="menu-item">
+                    <h3 class="menu-item-title">X-Lombo Tudo</h3>
+                    <p class="menu-item-description">Pão, lombo, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</p>
+                    <div class="menu-item-price">31,00</div>
+                </div>
+                <div class="menu-item">
+                    <h3 class="menu-item-title">X-Lombo Mata Fome</h3>
+                    <p class="menu-item-description">Pão, 2 lombos, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</p>
+                    <div class="menu-item-price">43,00</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Filé -->
+        <section id="beef" class="menu-section">
+            <h2 class="menu-section-title beef">Filé</h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <h3 class="menu-item-title">X-Filé Simples</h3>
+                    <p class="menu-item-description">Pão, filé bovino, presunto, muçarela, salada, milho e batata</p>
+                    <div class="menu-item-price">28,00</div>
+                </div>
+                <div class="menu-item">
+                    <h3 class="menu-item-title">X-Filé Especial</h3>
+                    <p class="menu-item-description">Pão, filé bovino, ovo, presunto, muçarela, salada, milho e batata</p>
+                    <div class="menu-item-price">30,00</div>
+                </div>
+                <div class="menu-item popular">
+                    <h3 class="menu-item-title">X-Filé Bacon</h3>
+                    <p class="menu-item-description">Pão, filé bovino, bacon, ovo, presunto, muçarela, salada, milho e batata</p>
+                    <div class="menu-item-price">33,00</div>
+                </div>
+                <div class="menu-item">
+                    <h3 class="menu-item-title">X-Filé Tudo</h3>
+                    <p class="menu-item-description">Pão, filé bovino, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</p>
+                    <div class="menu-item-price">36,00</div>
+                </div>
+                <div class="menu-item">
+                    <h3 class="menu-item-title">X-Filé Mata Fome</h3>
+                    <p class="menu-item-description">Pão, 2 filés bovinos, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</p>
+                    <div class="menu-item-price">43,00</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Adicionais -->
+        <section id="extras" class="menu-section">
+            <h2 class="menu-section-title extras">Adicionais</h2>
+            <table class="menu-table">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Preço (R$)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr> <td>Hambúrguer</td> <td>8,00</td> </tr>
+                    <tr> <td>Filé de frango</td> <td>12,00</td> </tr>
+                    <tr> <td>Filé bovino</td> <td>15,00</td> </tr>
+                    <tr> <td>Lombo</td> <td>12,00</td> </tr>
+                    <tr> <td>Bacon</td> <td>6,00</td> </tr>
+                    <tr> <td>Salsicha</td> <td>5,00</td> </tr>
+                    <tr> <td>Ovo</td> <td>5,00</td> </tr>
+                    <tr> <td>Muçarela</td> <td>6,00</td> </tr>
+                    <tr> <td>Abacaxi</td> <td>2,00</td> </tr>
+                    <tr> <td>Molho da Casa</td> <td>2,00</td> </tr>
+                    <tr> <td>Cebola</td> <td>2,00</td> </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Seção Bebidas -->
+        <section id="drinks" class="menu-section">
+            <h2 class="menu-section-title drinks">Bebidas</h2>
+            <table class="menu-table">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Preço (R$)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr> <td>Caldo de Laranja 500ml</td> <td>12,00</td> </tr>
+                    <tr> <td>Suco Laranja 500ml</td> <td>10,00</td> </tr>
+                    <tr> <td>Suco Caju 500ml</td> <td>10,00</td> </tr>
+                    <tr> <td>Suco Maracujá 500ml</td> <td>12,00</td> </tr>
+                    <tr> <td>Suco Morango 500ml</td> <td>10,00</td> </tr>
+                    <tr> <td>Refrigerante lata 350ml</td> <td>7,00</td> </tr>
+                    <tr> <td>Refrigerante 600ml</td> <td>10,00</td> </tr>
+                    <tr> <td>Refrigerante 1,5L</td> <td>12,00</td> </tr>
+                    <tr> <td>Refrigerante 2L</td> <td>15,00</td> </tr>
+                    <tr> <td>H2O</td> <td>8,00</td> </tr>
+                    <tr> <td>Água sem gás</td> <td>3,00</td> </tr>
+                    <tr> <td>Água com gás</td> <td>4,00</td> </tr>
+                    <tr> <td>Creme Caju 500ml</td> <td>15,00</td> </tr>
+                    <tr> <td>Creme Cupuaçu 500ml</td> <td>15,00</td> </tr>
+                    <tr> <td>Creme Maracujá 500ml</td> <td>15,00</td> </tr>
+                    <tr> <td>Creme Morango 500ml</td> <td>15,00</td> </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Botão de voltar ao topo -->
+        <div class="scroll-indicator" id="scrollTop"></div>
+
+        <!-- Rodapé -->
+        <footer class="footer">
+            <img src="https://raw.githubusercontent.com/lucasricardocs/clips_dashboard/main/logo.png" alt="Clips Burger Logo" class="footer-logo">
+            <p>© 2025 Clips Burger - Todos os direitos reservados</p>
+        </footer>
+    </div>
+
+    <script>
+        // --- menu.js --- 
+        document.addEventListener('DOMContentLoaded', function() {
+            // Referências aos elementos
+            const navItems = document.querySelectorAll('.menu-nav-item');
+            const menuSections = document.querySelectorAll('.menu-section');
+            const scrollTopButton = document.getElementById('scrollTop');
+
+            // Inicialização
+            initNavigation();
+            addAnimationEffects();
+            initScrollTopButton();
+
+            // Função para inicializar a navegação
+            function initNavigation() {
+                navItems.forEach(item => {
+                    item.addEventListener('click', function() {
+                        navItems.forEach(nav => nav.classList.remove('active'));
+                        this.classList.add('active');
+                        const targetId = this.getAttribute('data-target');
+                        const targetSection = document.getElementById(targetId);
+                        if (targetSection) {
+                            const yOffset = -80; // Ajuste para compensar a barra de navegação fixa
+                            const y = targetSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                            window.scrollTo({top: y, behavior: 'smooth'});
+                        }
+                    });
+                });
+
+                window.addEventListener('scroll', function() {
+                    let currentSection = '';
+                    menuSections.forEach(section => {
+                        const sectionTop = section.offsetTop;
+                        if (pageYOffset >= (sectionTop - 100)) { // Ajuste para ativar um pouco antes
+                            currentSection = section.getAttribute('id');
+                        }
+                    });
+
+                    if (currentSection !== '') {
+                        let activeFound = false;
+                        navItems.forEach(item => {
+                            if (item.getAttribute('data-target') === currentSection) {
+                                item.classList.add('active');
+                                activeFound = true;
+                            } else {
+                                item.classList.remove('active');
+                            }
+                        });
+                        // Se nenhuma seção estiver ativa (topo da página), ativar o primeiro item
+                        if (!activeFound && window.pageYOffset < 200) {
+                             navItems.forEach(item => item.classList.remove('active'));
+                             if(navItems.length > 0) navItems[0].classList.add('active');
+                        }
+                    } else {
+                         // Ativar o primeiro item se estiver no topo
+                         navItems.forEach(item => item.classList.remove('active'));
+                         if(navItems.length > 0) navItems[0].classList.add('active');
+                    }
+                });
+            }
+
+            // Adicionar efeitos de animação
+            function addAnimationEffects() {
+                const menuItems = document.querySelectorAll('.menu-item');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('animate-in');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                menuItems.forEach(item => { observer.observe(item); });
+
+                menuItems.forEach(item => {
+                    item.addEventListener('touchstart', function() { this.classList.add('touch-active'); });
+                    item.addEventListener('touchend', function() { this.classList.remove('touch-active'); });
+                });
+            }
+
+            // Adicionar partículas de fogo dinamicamente
+            function createFireParticles() {
+                const fireContainer = document.querySelector('.fire-container');
+                if (!fireContainer) return; // Garante que o container existe
+
+                // Limpar partículas existentes
+                const existingParticles = fireContainer.querySelectorAll('.fire-particle');
+                existingParticles.forEach(particle => particle.remove());
+
+                // Criar novas partículas
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement('div');
+                    const size = Math.random();
+                    if (size < 0.4) { particle.className = 'fire-particle small'; }
+                    else if (size < 0.7) { particle.className = 'fire-particle medium'; }
+                    else { particle.className = 'fire-particle large'; }
+
+                    const position = Math.random() * 100;
+                    particle.style.left = `${position}%`;
+                    const duration = 4 + Math.random() * 2;
+                    const delay = Math.random() * 3;
+                    particle.style.animationDuration = `${duration}s`;
+                    particle.style.animationDelay = `${delay}s`;
+                    const randomX = (Math.random() * 40) - 20;
+                    particle.style.setProperty('--random-x', `${randomX}px`);
+                    fireContainer.appendChild(particle);
+                }
+            }
+
+            // Iniciar partículas de fogo e recriar periodicamente
+            createFireParticles();
+            setInterval(createFireParticles, 6000); // Recria a cada 6 segundos
+
+            // Botão Voltar ao Topo
+            function initScrollTopButton() {
+                if (!scrollTopButton) return;
+                window.addEventListener('scroll', () => {
+                    if (window.pageYOffset > 300) {
+                        scrollTopButton.classList.add('visible');
+                    } else {
+                        scrollTopButton.classList.remove('visible');
+                    }
+                });
+                scrollTopButton.addEventListener('click', () => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+        });
+
+        // Adicionar classe para animação de entrada do corpo
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('loaded');
+        });
+    </script>
+</body>
+</html>
