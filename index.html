@@ -6,22 +6,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     html, body {
-      height: 100%;
       margin: 0;
       padding: 0;
-      background: radial-gradient(ellipse at 50% 0%, #232b3a 0%, #151a24 100%);
-      color: #f8fafc;
+      min-height: 100vh;
       font-family: 'Segoe UI', 'Inter', Arial, Helvetica, sans-serif;
-      min-height: 100vh;
-      box-sizing: border-box;
+      color: #f8fafc;
+      background: #181c24;
+      /* Background inspirado no cardápio */
+      background-image: url('https://pplx-res.cloudinary.com/image/private/user_uploads/69653277/638c93f1-2e4e-438d-99fe-2aa1ea5a930e/IMG_2434.jpg');
+      background-size: cover;
+      background-position: center top;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
     }
-    body {
+    .overlay {
+      background: rgba(18, 22, 32, 0.93);
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background-image: url('https://www.transparenttextures.com/patterns/diamond-upholstery.png');
-      background-repeat: repeat;
+      width: 100vw;
+      position: absolute;
+      top: 0; left: 0;
+      z-index: 0;
+    }
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1vw 2vw 1vw;
     }
     .header-area {
       display: flex;
@@ -32,25 +43,24 @@
       margin-top: 3vw;
       margin-bottom: 2vw;
       width: 100%;
-      max-width: 900px;
     }
     .fire-visual {
       display: flex;
       align-items: flex-end;
       justify-content: center;
       position: relative;
-      height: 260px;
-      width: 260px;
-      min-width: 200px;
-      min-height: 200px;
+      height: 220px;
+      width: 220px;
+      min-width: 160px;
+      min-height: 160px;
     }
     .fire-logo {
       position: absolute;
       bottom: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 220px;
-      height: 220px;
+      width: 180px;
+      height: 180px;
       z-index: 2;
       filter: drop-shadow(0 0 32px #ffb30088);
       animation: logoFloat 3s ease-in-out infinite;
@@ -58,15 +68,15 @@
     }
     @keyframes logoFloat {
       0%, 100% { transform: translateX(-50%) translateY(0) scale(1);}
-      50% { transform: translateX(-50%) translateY(-18px) scale(1.07);}
+      50% { transform: translateX(-50%) translateY(-12px) scale(1.07);}
     }
     .fire-container {
       position: absolute;
       bottom: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 220px;
-      height: 220px;
+      width: 180px;
+      height: 180px;
       z-index: 1;
       pointer-events: none;
       overflow: visible;
@@ -87,25 +97,25 @@
       100% { transform: translateX(-50%) rotate(-1deg) scaleY(1); opacity: 0.89;}
     }
     .flame-red {
-      left: 50%; width: 110px; height: 140px;
+      left: 50%; width: 90px; height: 120px;
       background: radial-gradient(circle, #ff4500 0%, #ff6347 30%, #dc143c 70%, #8b0000 100%);
       box-shadow: 0 0 40px #ff4500, 0 0 80px #ff6347;
       animation-duration: 0.8s;
     }
     .flame-orange {
-      left: 44%; width: 80px; height: 100px;
+      left: 44%; width: 60px; height: 80px;
       background: radial-gradient(circle, #ffa500 0%, #ff8c00 50%, #ff4500 100%);
       box-shadow: 0 0 30px #ffa500;
       animation-duration: 0.6s; animation-delay: 0.2s;
     }
     .flame-yellow {
-      left: 56%; width: 60px; height: 80px;
+      left: 56%; width: 40px; height: 60px;
       background: radial-gradient(circle, #ffff00 0%, #ffd700 50%, #ffa500 100%);
       box-shadow: 0 0 24px #ffff00;
       animation-duration: 0.4s; animation-delay: 0.4s;
     }
     .flame-white {
-      left: 50%; width: 36px; height: 60px;
+      left: 50%; width: 20px; height: 36px;
       background: radial-gradient(circle, #ffffff 0%, #ffff99 50%, #ffd700 100%);
       box-shadow: 0 0 16px #ffffff;
       animation-duration: 0.3s; animation-delay: 0.1s;
@@ -123,77 +133,69 @@
       0% { bottom: 0px; opacity: 1; transform: translateX(0) scale(1);}
       10% { bottom: 30px; opacity: 1;}
       25% { bottom: 60px; opacity: 0.9;}
-      40% { bottom: 110px; opacity: 0.7;}
-      60% { bottom: 160px; opacity: 0.6;}
-      80% { bottom: 200px; opacity: 0.3;}
-      100% { bottom: 220px; opacity: 0;}
+      40% { bottom: 100px; opacity: 0.7;}
+      60% { bottom: 140px; opacity: 0.6;}
+      80% { bottom: 170px; opacity: 0.3;}
+      100% { bottom: 180px; opacity: 0;}
     }
-    .fire-particle.small { width: 6px; height: 6px; background: #ff6347; box-shadow: 0 0 8px #ff6347;}
-    .fire-particle.medium { width: 9px; height: 9px; background: #ffa500; box-shadow: 0 0 10px #ffa500;}
-    .fire-particle.large { width: 13px; height: 13px; background: #ffff00; box-shadow: 0 0 14px #ffff00;}
+    .fire-particle.small { width: 5px; height: 5px; background: #ff6347; box-shadow: 0 0 8px #ff6347;}
+    .fire-particle.medium { width: 7px; height: 7px; background: #ffa500; box-shadow: 0 0 10px #ffa500;}
+    .fire-particle.large { width: 10px; height: 10px; background: #ffff00; box-shadow: 0 0 14px #ffff00;}
     .fire-particle:nth-child(5n+1) { left: 5%; animation-delay: 0.2s; animation-duration: 4.5s;}
     .fire-particle:nth-child(5n+2) { left: 15%; animation-delay: 0.7s; animation-duration: 4.8s;}
     .fire-particle:nth-child(5n+3) { left: 25%; animation-delay: 1.2s; animation-duration: 4.2s;}
     .fire-particle:nth-child(5n+4) { left: 35%; animation-delay: 1.7s; animation-duration: 5.1s;}
     .fire-particle:nth-child(5n)   { left: 50%; animation-delay: 2.0s; animation-duration: 5.1s;}
-    @media (max-width: 900px) {
-      .header-area { flex-direction: column; align-items: center; }
-    }
     @media (max-width: 600px) {
-      .header-area { gap: 0.5vw; margin-top: 2vw; }
-      .fire-visual { width: 140px; height: 140px; min-width: 100px; min-height: 100px;}
-      .fire-logo { width: 120px; height: 120px;}
-      .fire-container { width: 120px; height: 120px;}
-      .flame-red { width: 60px; height: 75px;}
-      .flame-orange { width: 40px; height: 50px;}
-      .flame-yellow { width: 28px; height: 36px;}
-      .flame-white { width: 18px; height: 22px;}
-    }
-
-    /* Cardápio */
-    .menu-container {
-      width: 100%;
-      max-width: 800px;
-      margin: 0 auto 32px auto;
-      background: rgba(22, 28, 44, 0.94);
-      border-radius: 1.2rem;
-      box-shadow: 0 8px 32px #000a 0.15;
-      padding: 2.2rem 1.2rem 1.8rem 1.2rem;
-      backdrop-filter: blur(2px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      .header-area { flex-direction: column; align-items: center; }
+      .fire-visual { width: 100px; height: 100px; min-width: 80px; min-height: 80px;}
+      .fire-logo { width: 70px; height: 70px;}
+      .fire-container { width: 70px; height: 70px;}
+      .flame-red { width: 30px; height: 40px;}
+      .flame-orange { width: 18px; height: 25px;}
+      .flame-yellow { width: 12px; height: 16px;}
+      .flame-white { width: 8px; height: 10px;}
     }
     h1 {
       font-weight: 800;
       color: #fbbf24;
       margin-bottom: 0.5em;
-      text-align: center;
+      text-align: left;
       letter-spacing: 1px;
       text-shadow: 0 2px 8px #0f172a66;
       font-size: 2.1rem;
     }
-    h2 {
-      font-size: 1.3rem;
-      color: #fbbf24;
-      margin-top: 2.5rem;
-      margin-bottom: 0.7em;
-      border-bottom: 2px solid #f58518;
-      padding-bottom: 0.2em;
-      text-align: left;
-      width: 100%;
-      max-width: 700px;
-      letter-spacing: 1px;
+    .delivery, .promo {
+      font-size: 1.1em;
+      margin-bottom: 0.5em;
+      padding: 0.4em 1em;
+      border-radius: 0.7em;
+      display: inline-block;
+    }
+    .delivery { background: #232b3a; color: #fbbf24; font-weight: bold;}
+    .promo { background: #dc143c; color: #fff; font-weight: bold;}
+    .section-title {
+      background: linear-gradient(90deg, #fbbf24 70%, #f58518 100%);
+      color: #181c24;
+      border-radius: 0.7em;
+      font-weight: bold;
+      padding: 0.2em 1.2em;
+      font-size: 1.2em;
+      margin: 2.2em 0 1em 0;
+      display: inline-block;
+      box-shadow: 0 2px 8px #fbbf2433;
     }
     .menu-table {
       width: 100%;
-      max-width: 700px;
       border-collapse: collapse;
       margin-bottom: 1.5rem;
-      background: transparent;
+      background: rgba(24,28,36,0.92);
+      border-radius: 1em;
+      overflow: hidden;
+      box-shadow: 0 2px 12px #0004;
     }
     .menu-table th, .menu-table td {
-      padding: 0.6em 0.5em;
+      padding: 0.7em 0.5em;
       font-size: 1.07em;
       text-align: left;
     }
@@ -201,12 +203,13 @@
       color: #fbbf24;
       font-size: 1.1em;
       border-bottom: 1.5px solid #f58518;
-      background: none;
+      background: #232b3a;
     }
     .menu-table td {
       border-bottom: 1px solid #232f47;
       color: #f8fafc;
       vertical-align: top;
+      background: transparent;
     }
     .menu-table td.price {
       color: #54a24b;
@@ -218,24 +221,9 @@
     .menu-table tr:last-child td {
       border-bottom: none;
     }
-    .menu-section {
-      margin-bottom: 2.5rem;
-      width: 100%;
-      max-width: 700px;
-    }
-    .menu-highlight {
-      background: #f58518;
-      color: #1e293b;
-      border-radius: 0.7em;
-      padding: 0.2em 0.7em;
-      font-weight: bold;
-      display: inline-block;
-      margin-bottom: 0.8em;
-      font-size: 1.1em;
-    }
     .extras {
       background: #fbbf24;
-      color: #1e293b;
+      color: #181c24;
       border-radius: 0.8em;
       padding: 0.4em 1em;
       font-weight: bold;
@@ -244,6 +232,7 @@
       margin: 1.2em 0;
       width: 100%;
       max-width: 700px;
+      box-shadow: 0 2px 8px #fbbf2433;
     }
     .adicionais-table {
       width: 100%;
@@ -280,6 +269,7 @@
       border-bottom: 1px solid #232f47;
       padding: 0.6em 0.5em;
       font-size: 1em;
+      background: transparent;
     }
     .bebidas-table th {
       color: #fbbf24;
@@ -292,31 +282,6 @@
       text-align: right;
       min-width: 60px;
     }
-    .promo {
-      display: block;
-      background: #dc143c;
-      color: #fff;
-      border-radius: 0.7em;
-      padding: 0.5em 1em;
-      text-align: center;
-      font-weight: bold;
-      font-size: 1.05em;
-      margin: 1.5em 0 1em 0;
-      box-shadow: 0 2px 8px #dc143c33;
-      width: 100%;
-      max-width: 700px;
-    }
-    .delivery {
-      text-align: center;
-      margin-top: 0.5em;
-      margin-bottom: 1.2em;
-      font-size: 1.12em;
-    }
-    .delivery span {
-      color: #fbbf24;
-      font-weight: bold;
-      margin-left: 0.3em;
-    }
     .footer {
       text-align: center;
       color: #fbbf24;
@@ -325,49 +290,48 @@
       margin: 2em 0 1em 0;
       width: 100%;
     }
-    /* Scrollbar customizada */
-    ::-webkit-scrollbar { width: 8px; background: #1e293b;}
-    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 8px;}
+    @media (max-width: 600px) {
+      .container { padding: 0 0.3vw 1vw 0.3vw;}
+      .menu-table th, .menu-table td { font-size: 0.96em;}
+    }
   </style>
 </head>
 <body>
-  <div class="header-area">
-    <div class="fire-visual">
-      <img src="https://raw.githubusercontent.com/lucasricardocs/clips_dashboard/main/logo.png" class="fire-logo" alt="Clip's Burger Logo">
-      <div class="fire-container">
-        <div class="flame flame-red"></div>
-        <div class="flame flame-orange"></div>
-        <div class="flame flame-yellow"></div>
-        <div class="flame flame-white"></div>
-        <div class="fire-particle small"></div>
-        <div class="fire-particle small"></div>
-        <div class="fire-particle small"></div>
-        <div class="fire-particle small"></div>
-        <div class="fire-particle small"></div>
-        <div class="fire-particle medium"></div>
-        <div class="fire-particle medium"></div>
-        <div class="fire-particle medium"></div>
-        <div class="fire-particle medium"></div>
-        <div class="fire-particle medium"></div>
-        <div class="fire-particle large"></div>
-        <div class="fire-particle large"></div>
-        <div class="fire-particle large"></div>
-        <div class="fire-particle large"></div>
-        <div class="fire-particle large"></div>
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="header-area">
+      <div class="fire-visual">
+        <img src="https://raw.githubusercontent.com/lucasricardocs/clips_dashboard/main/logo.png" class="fire-logo" alt="Clip's Burger Logo">
+        <div class="fire-container">
+          <div class="flame flame-red"></div>
+          <div class="flame flame-orange"></div>
+          <div class="flame flame-yellow"></div>
+          <div class="flame flame-white"></div>
+          <div class="fire-particle small"></div>
+          <div class="fire-particle small"></div>
+          <div class="fire-particle small"></div>
+          <div class="fire-particle small"></div>
+          <div class="fire-particle small"></div>
+          <div class="fire-particle medium"></div>
+          <div class="fire-particle medium"></div>
+          <div class="fire-particle medium"></div>
+          <div class="fire-particle medium"></div>
+          <div class="fire-particle medium"></div>
+          <div class="fire-particle large"></div>
+          <div class="fire-particle large"></div>
+          <div class="fire-particle large"></div>
+          <div class="fire-particle large"></div>
+          <div class="fire-particle large"></div>
+        </div>
+      </div>
+      <div>
+        <h1>Clip's Burger</h1>
+        <div class="delivery">Delivery: 62 98157-6704</div>
+        <div class="promo">Promoção: Na compra de 3 X-Tudo, grátis 1 refrigerante 1L</div>
       </div>
     </div>
-    <div>
-      <h1>Clip's Burger</h1>
-      <div class="delivery">
-        Delivery:<span>62 98157-6704</span>
-      </div>
-      <span class="promo">PROMOÇÃO! Na compra de 3 X-TUDO, grátis 1 refrigerante 1L</span>
-    </div>
-  </div>
 
-  <div class="menu-container">
-    <!-- Sanduíches com Hambúrguer -->
-    <h2>Sanduíches com Hambúrguer</h2>
+    <div class="section-title">Sanduíches com Hambúrguer</div>
     <table class="menu-table">
       <tr><th>Nome</th><th>Descrição</th><th class="price">Preço</th></tr>
       <tr><td>X-Salada Simples</td><td>Pão, hambúrguer, presunto, muçarela, salada, milho e batata</td><td class="price">18,00</td></tr>
@@ -381,8 +345,7 @@
       <tr><td>X-Mata Fome</td><td>Pão, 2 hambúrgueres, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</td><td class="price">39,00</td></tr>
     </table>
 
-    <!-- Sanduíches com Frango -->
-    <h2>Sanduíches com Frango</h2>
+    <div class="section-title">Sanduíches com Frango</div>
     <table class="menu-table">
       <tr><th>Nome</th><th>Descrição</th><th class="price">Preço</th></tr>
       <tr><td>X-Frango Simples</td><td>Pão, filé de frango, presunto, muçarela, salada, milho e batata</td><td class="price">22,00</td></tr>
@@ -394,8 +357,7 @@
 
     <div class="extras">EXTRAS: Abacaxi e Molho da Casa – R$ 2,00 cada</div>
 
-    <!-- Sanduíches com Lombo -->
-    <h2>Sanduíches com Lombo</h2>
+    <div class="section-title">Sanduíches com Lombo</div>
     <table class="menu-table">
       <tr><th>Nome</th><th>Descrição</th><th class="price">Preço</th></tr>
       <tr><td>X-Lombo Simples</td><td>Pão, lombo, presunto, muçarela, salada, milho e batata</td><td class="price">23,00</td></tr>
@@ -405,8 +367,7 @@
       <tr><td>X-Lombo Mata Fome</td><td>Pão, 2 lombos, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</td><td class="price">43,00</td></tr>
     </table>
 
-    <!-- Sanduíches com Filé -->
-    <h2>Sanduíches com Filé</h2>
+    <div class="section-title">Sanduíches com Filé</div>
     <table class="menu-table">
       <tr><th>Nome</th><th>Descrição</th><th class="price">Preço</th></tr>
       <tr><td>X-Filé Simples</td><td>Pão, filé bovino, presunto, muçarela, salada, milho e batata</td><td class="price">28,00</td></tr>
@@ -418,8 +379,7 @@
 
     <div class="extras">EXTRAS: Abacaxi, Cebola e Molho da Casa – R$ 2,00 cada</div>
 
-    <!-- Adicionais -->
-    <h2>Adicionais</h2>
+    <div class="section-title">Adicionais</div>
     <table class="adicionais-table">
       <tr><td>Hambúrguer</td><td class="price">8,00</td><td>Bacon</td><td class="price">6,00</td></tr>
       <tr><td>Filé de frango</td><td class="price">12,00</td><td>Salsicha</td><td class="price">5,00</td></tr>
@@ -427,33 +387,31 @@
       <tr><td>Lombo</td><td class="price">12,00</td><td>Muçarela</td><td class="price">6,00</td></tr>
     </table>
 
-    <!-- Bebidas -->
-    <div class="bebidas-section">
-      <div class="bebidas-title">Bebidas</div>
-      <table class="bebidas-table">
-        <tr><th>Suco 500ml</th><th class="price">Preço</th></tr>
-        <tr><td>Caldo de Laranja</td><td class="price">12,00</td></tr>
-        <tr><td>Laranja</td><td class="price">12,00</td></tr>
-        <tr><td>Caju</td><td class="price">12,00</td></tr>
-        <tr><td>Maracujá</td><td class="price">12,00</td></tr>
-        <tr><td>Morango</td><td class="price">10,00</td></tr>
-      </table>
-      <table class="bebidas-table">
-        <tr><th>Bebidas Diversas</th><th class="price">Preço</th></tr>
-        <tr><td>Refrigerante lata 350ml</td><td class="price">7,00</td></tr>
-        <tr><td>Refrigerante 1,5L</td><td class="price">12,00</td></tr>
-        <tr><td>Refrigerante 2Lts</td><td class="price">15,00</td></tr>
-        <tr><td>H2O</td><td class="price">8,00</td></tr>
-        <tr><td>Água sem gás</td><td class="price">3,00</td></tr>
-        <tr><td>Água com gás</td><td class="price">4,00</td></tr>
-      </table>
-      <table class="bebidas-table">
-        <tr><th>Cremes 500ml</th><th class="price">Preço</th></tr>
-        <tr><td>Cupuaçu</td><td class="price">15,00</td></tr>
-        <tr><td>Açaí</td><td class="price">15,00</td></tr>
-        <tr><td>Morango</td><td class="price">15,00</td></tr>
-      </table>
-    </div>
+    <div class="section-title">Bebidas</div>
+    <table class="bebidas-table">
+      <tr><th>Suco 500ml</th><th class="price">Preço</th></tr>
+      <tr><td>Caldo de Laranja</td><td class="price">12,00</td></tr>
+      <tr><td>Laranja</td><td class="price">12,00</td></tr>
+      <tr><td>Caju</td><td class="price">12,00</td></tr>
+      <tr><td>Maracujá</td><td class="price">12,00</td></tr>
+      <tr><td>Morango</td><td class="price">10,00</td></tr>
+    </table>
+    <table class="bebidas-table">
+      <tr><th>Bebidas Diversas</th><th class="price">Preço</th></tr>
+      <tr><td>Refrigerante lata 350ml</td><td class="price">7,00</td></tr>
+      <tr><td>Refrigerante 1,5L</td><td class="price">12,00</td></tr>
+      <tr><td>Refrigerante 2Lts</td><td class="price">15,00</td></tr>
+      <tr><td>H2O</td><td class="price">8,00</td></tr>
+      <tr><td>Água sem gás</td><td class="price">3,00</td></tr>
+      <tr><td>Água com gás</td><td class="price">4,00</td></tr>
+    </table>
+    <table class="bebidas-table">
+      <tr><th>Cremes 500ml</th><th class="price">Preço</th></tr>
+      <tr><td>Cupuaçu</td><td class="price">15,00</td></tr>
+      <tr><td>Açaí</td><td class="price">15,00</td></tr>
+      <tr><td>Morango</td><td class="price">15,00</td></tr>
+    </table>
+
     <div class="footer">
       Volte Sempre!
     </div>
