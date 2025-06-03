@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clips Burger - Cardápio</title>
     <style>
-        /* --- menu_styles.css --- */
         /* Reset e configurações globais */
         * {
             margin: 0;
@@ -168,15 +167,6 @@
             font-size: 1.5rem; font-weight: 700; margin-bottom: 1.25rem; color: #f8fafc;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); display: flex; align-items: center; gap: 0.5rem;
         }
-        .menu-section-title::before {
-            content: ''; display: block; width: 24px; height: 24px; background-size: contain; background-repeat: no-repeat;
-        }
-        .menu-section-title.hamburger::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff4500' viewBox='0 0 24 24'%3E%3Cpath d='M2 16h20v2H2v-2zm0-5h20v2H2v-2zm0-5h20v2H2V6z'/%3E%3C/svg%3E"); }
-        .menu-section-title.chicken::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff4500' viewBox='0 0 24 24'%3E%3Cpath d='M20.16 12.73C22.93 9.96 22.57 5.26 19.09 3c-.34-.22-.77-.22-1.11.01-1.14.78-2.26 1.66-3.34 2.63-.52.47-1.07.99-1.63 1.57-.29-.32-.61-.63-.96-.89-.3-.22-.69-.48-1.15-.48-.57 0-1.04.51-1.04 1.08 0 .19.05.36.12.53-1.06 1.06-2.02 2.15-2.82 3.38-2.46.71-5.39 4.32-4.76 7.35.16.72.49 1.34.95 1.84.43.47 1.27.69 1.87.13l3.22-3.22c.44-.43 1.15-.43 1.59 0 .43.44.43 1.15 0 1.59l-3.22 3.22c-.56.6-.34 1.44.13 1.87.5.46 1.12.79 1.84.95 3.03.63 6.64-2.3 7.35-4.76 1.23-.8 2.32-1.76 3.38-2.82.17.07.34.12.53.12.57 0 1.08-.47 1.08-1.04 0-.46-.26-.85-.48-1.15-.26-.35-.57-.67-.89-.96.58-.56 1.1-1.11 1.57-1.63.97-1.08 1.85-2.2 2.63-3.34.23-.34.23-.77.01-1.11-2.26-3.48-6.96-3.84-9.73-1.07-1.26-1.26-2.86-2.06-4.59-2.36-1.2-.21-2.43-.15-3.52.21-.51.16-.99.39-1.42.67-.22.14-.53.31-.66.61-.14.3-.08.68.12.94.54.7 1.37 1.02 2.2 1.03-.15.47-.23.96-.23 1.48 0 1.45.56 2.76 1.47 3.76-.45.39-.94.72-1.48.96-.87.39-1.83.59-2.79.59-.19 0-.37-.01-.56-.02-.53-.04-1.05-.15-1.56-.32-.52-.17-1.01-.4-1.48-.69L2 13.43l1.09 1.07c.38.38.78.73 1.21 1.06.75.58 1.58 1.04 2.49 1.38.91.34 1.88.51 2.89.51.32 0 .65-.02.97-.05 1.93-.19 3.73-.9 5.19-2.01.6.42 1.32.65 2.06.65 1.92 0 3.5-1.57 3.5-3.5 0-.74-.23-1.46-.65-2.06 1.11-1.46 1.82-3.26 2.01-5.19.19-1.92-.05-3.84-.69-5.65l-1.08 1.08c.58 1.29.86 2.74.75 4.22-.09 1.17-.44 2.3-1.02 3.28-.08-.05-.17-.1-.25-.15-.37-.22-.76-.41-1.17-.56.42-.7.67-1.52.67-2.39 0-1.92-1.58-3.5-3.5-3.5-.87 0-1.69.25-2.39.67-.15-.41-.34-.8-.56-1.17-.05-.08-.1-.17-.15-.25.98-.58 2.11-.93 3.28-1.02 1.48-.11 2.93.17 4.22.75L21.2 3.74c-1.81-.64-3.73-.88-5.65-.69-1.93.19-3.73.9-5.19 2.01-.6-.42-1.32-.65-2.06-.65-1.92 0-3.5 1.57-3.5 3.5 0 .74.23 1.46.65 2.06-1.11 1.46-1.82 3.26-2.01 5.19-.04.32-.05.65-.05.97 0 1.01.17 1.98.51 2.89.34.91.8 1.74 1.38 2.49.33.43.68.83 1.06 1.21l1.07 1.09 1.07-1.07c-.29-.47-.52-.96-.69-1.48-.17-.51-.28-1.03-.32-1.56-.01-.19-.02-.37-.02-.56 0-.96.2-1.92.59-2.79.24-.54.57-1.03.96-1.48 1 .91 2.31 1.47 3.76 1.47.52 0 1.01-.08 1.48-.23.01.83.33 1.66 1.03 2.2.26.2.64.26.94.12.3-.13.47-.44.61-.66.28-.43.51-.91.67-1.42.36-1.09.42-2.32.21-3.52-.3-1.73-1.1-3.33-2.36-4.59z'/%3E%3C/svg%3E"); }
-        .menu-section-title.pork::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff4500' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 10.5c0 .8-.7 1.5-1.5 1.5s-1.5-.7-1.5-1.5.7-1.5 1.5-1.5 1.5.7 1.5 1.5M8.5 10.5c0 .8-.7 1.5-1.5 1.5s-1.5-.7-1.5-1.5.7-1.5 1.5-1.5 1.5.7 1.5 1.5M12 16c-1.9 0-3.5-1-4.3-2.4l1-.6c.7 1.1 1.9 1.8 3.3 1.8s2.6-.7 3.3-1.8l1 .6c-.8 1.4-2.4 2.4-4.3 2.4M19 2H5a3 3 0 0 0-3 3v14a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V5a3 3 0 0 0-3-3m1 17a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1z'/%3E%3C/svg%3E"); }
-        .menu-section-title.beef::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff4500' viewBox='0 0 24 24'%3E%3Cpath d='M7.64 21.71a8 8 0 0 1-5.35-5.35A8.26 8.26 0 0 1 2 13.5v-3A8.5 8.5 0 0 1 10.5 2h3A8.5 8.5 0 0 1 22 10.5v3a8.26 8.26 0 0 1-.29 2.86 8 8 0 0 1-5.35 5.35A8.26 8.26 0 0 1 13.5 22h-3a8.26 8.26 0 0 1-2.86-.29M10.5 4A6.5 6.5 0 0 0 4 10.5v3a6.34 6.34 0 0 0 .22 1.67 6 6 0 0 0 4.11 4.11A6.34 6.34 0 0 0 10.5 20h3a6.34 6.34 0 0 0 1.67-.22 6 6 0 0 0 4.11-4.11A6.34 6.34 0 0 0 20 13.5v-3A6.5 6.5 0 0 0 13.5 4h-3m0 2A4.5 4.5 0 0 0 6 10.5v3a4.77 4.77 0 0 0 .17 1.5 4.5 4.5 0 0 0 3.33 3.33 4.77 4.77 0 0 0 1.5.17h3a4.77 4.77 0 0 0 1.5-.17 4.5 4.5 0 0 0 3.33-3.33A4.77 4.77 0 0 0 19 13.5v-3A4.5 4.5 0 0 0 14.5 6h-4m-.5 2h4a2.5 2.5 0 0 1 2.5 2.5v3a2.5 2.5 0 0 1-2.5 2.5h-3a2.5 2.5 0 0 1-2.5-2.5v-3A2.5 2.5 0 0 1 10 8m0 2v4h4v-4h-4z'/%3E%3C/svg%3E"); }
-        .menu-section-title.extras::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff4500' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8m-5 6h10v2H7v-2z'/%3E%3C/svg%3E"); }
-        .menu-section-title.drinks::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff4500' viewBox='0 0 24 24'%3E%3Cpath d='M7.5 7l-2-2h13l-2 2M10 3h4l1 1h-6M3 9h18v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2m6 5v5h6v-5z'/%3E%3C/svg%3E"); }
         /* Cards de itens do cardápio */
         .menu-items { display: grid; grid-template-columns: 1fr; gap: 1rem; }
         .menu-item {
@@ -314,26 +304,44 @@
         <div class="logo-fire-container">
             <img src="https://raw.githubusercontent.com/lucasricardocs/clips_dashboard/main/logo.png" class="fire-logo" alt="Clips Burger Logo">
             <div class="fire-container">
-                <!-- Partículas serão adicionadas pelo JS -->
+                <div class="flame flame-red"></div>
+                <div class="flame flame-orange"></div>
+                <div class="flame flame-yellow"></div>
+                <div class="flame flame-white"></div>
+                <div class="fire-particle small"></div>
+                <div class="fire-particle small"></div>
+                <div class="fire-particle small"></div>
+                <div class="fire-particle small"></div>
+                <div class="fire-particle small"></div>
+                <div class="fire-particle medium"></div>
+                <div class="fire-particle medium"></div>
+                <div class="fire-particle medium"></div>
+                <div class="fire-particle medium"></div>
+                <div class="fire-particle medium"></div>
+                <div class="fire-particle large"></div>
+                <div class="fire-particle large"></div>
+                <div class="fire-particle large"></div>
+                <div class="fire-particle large"></div>
+                <div class="fire-particle large"></div>
             </div>
         </div>
 
         <!-- Título do Cardápio -->
-        <h1 class="menu-title">CARDÁPIO</h1>
+        <h1 class="menu-title">🍔 CARDÁPIO 🍔</h1>
 
         <!-- Navegação por Categorias -->
         <nav class="menu-nav">
-            <div class="menu-nav-item active" data-target="hamburger">Hambúrguer</div>
-            <div class="menu-nav-item" data-target="chicken">Frango</div>
-            <div class="menu-nav-item" data-target="pork">Lombo</div>
-            <div class="menu-nav-item" data-target="beef">Filé</div>
-            <div class="menu-nav-item" data-target="extras">Adicionais</div>
-            <div class="menu-nav-item" data-target="drinks">Bebidas</div>
+            <div class="menu-nav-item active" data-target="hamburger">🍔 Hambúrguer</div>
+            <div class="menu-nav-item" data-target="chicken">🍗 Frango</div>
+            <div class="menu-nav-item" data-target="pork">🥓 Lombo</div>
+            <div class="menu-nav-item" data-target="beef">🥩 Filé</div>
+            <div class="menu-nav-item" data-target="extras">➕ Adicionais</div>
+            <div class="menu-nav-item" data-target="drinks">🥤 Bebidas</div>
         </nav>
 
         <!-- Seção Hambúrguer -->
         <section id="hamburger" class="menu-section">
-            <h2 class="menu-section-title hamburger">Hambúrguer</h2>
+            <h2 class="menu-section-title hamburger">🍔 Hambúrguer</h2>
             <div class="menu-items">
                 <div class="menu-item popular">
                     <h3 class="menu-item-title">X-Salada Simples</h3>
@@ -385,7 +393,7 @@
 
         <!-- Seção Frango -->
         <section id="chicken" class="menu-section">
-            <h2 class="menu-section-title chicken">Frango</h2>
+            <h2 class="menu-section-title chicken">🍗 Frango</h2>
             <div class="menu-items">
                 <div class="menu-item">
                     <h3 class="menu-item-title">X-Frango Simples</h3>
@@ -422,7 +430,7 @@
 
         <!-- Seção Lombo -->
         <section id="pork" class="menu-section">
-            <h2 class="menu-section-title pork">Lombo</h2>
+            <h2 class="menu-section-title pork">🥓 Lombo</h2>
             <div class="menu-items">
                 <div class="menu-item">
                     <h3 class="menu-item-title">X-Lombo Simples</h3>
@@ -454,7 +462,7 @@
 
         <!-- Seção Filé -->
         <section id="beef" class="menu-section">
-            <h2 class="menu-section-title beef">Filé</h2>
+            <h2 class="menu-section-title beef">🥩 Filé</h2>
             <div class="menu-items">
                 <div class="menu-item">
                     <h3 class="menu-item-title">X-Filé Simples</h3>
@@ -486,7 +494,7 @@
 
         <!-- Seção Adicionais -->
         <section id="extras" class="menu-section">
-            <h2 class="menu-section-title extras">Adicionais</h2>
+            <h2 class="menu-section-title extras">➕ Adicionais</h2>
             <table class="menu-table">
                 <thead>
                     <tr>
@@ -495,24 +503,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr> <td>Hambúrguer</td> <td>8,00</td> </tr>
-                    <tr> <td>Filé de frango</td> <td>12,00</td> </tr>
-                    <tr> <td>Filé bovino</td> <td>15,00</td> </tr>
-                    <tr> <td>Lombo</td> <td>12,00</td> </tr>
-                    <tr> <td>Bacon</td> <td>6,00</td> </tr>
-                    <tr> <td>Salsicha</td> <td>5,00</td> </tr>
-                    <tr> <td>Ovo</td> <td>5,00</td> </tr>
-                    <tr> <td>Muçarela</td> <td>6,00</td> </tr>
-                    <tr> <td>Abacaxi</td> <td>2,00</td> </tr>
-                    <tr> <td>Molho da Casa</td> <td>2,00</td> </tr>
-                    <tr> <td>Cebola</td> <td>2,00</td> </tr>
+                    <tr> <td>🍔 Hambúrguer</td> <td>8,00</td> </tr>
+                    <tr> <td>🍗 Filé de frango</td> <td>12,00</td> </tr>
+                    <tr> <td>🥩 Filé bovino</td> <td>15,00</td> </tr>
+                    <tr> <td>🥓 Lombo</td> <td>12,00</td> </tr>
+                    <tr> <td>🥓 Bacon</td> <td>6,00</td> </tr>
+                    <tr> <td>🌭 Salsicha</td> <td>5,00</td> </tr>
+                    <tr> <td>🥚 Ovo</td> <td>5,00</td> </tr>
+                    <tr> <td>🧀 Muçarela</td> <td>6,00</td> </tr>
+                    <tr> <td>🍍 Abacaxi</td> <td>2,00</td> </tr>
+                    <tr> <td>🥫 Molho da Casa</td> <td>2,00</td> </tr>
+                    <tr> <td>🧅 Cebola</td> <td>2,00</td> </tr>
                 </tbody>
             </table>
         </section>
 
         <!-- Seção Bebidas -->
         <section id="drinks" class="menu-section">
-            <h2 class="menu-section-title drinks">Bebidas</h2>
+            <h2 class="menu-section-title drinks">🥤 Bebidas</h2>
             <table class="menu-table">
                 <thead>
                     <tr>
@@ -521,22 +529,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr> <td>Caldo de Laranja 500ml</td> <td>12,00</td> </tr>
-                    <tr> <td>Suco Laranja 500ml</td> <td>10,00</td> </tr>
-                    <tr> <td>Suco Caju 500ml</td> <td>10,00</td> </tr>
-                    <tr> <td>Suco Maracujá 500ml</td> <td>12,00</td> </tr>
-                    <tr> <td>Suco Morango 500ml</td> <td>10,00</td> </tr>
-                    <tr> <td>Refrigerante lata 350ml</td> <td>7,00</td> </tr>
-                    <tr> <td>Refrigerante 600ml</td> <td>10,00</td> </tr>
-                    <tr> <td>Refrigerante 1,5L</td> <td>12,00</td> </tr>
-                    <tr> <td>Refrigerante 2L</td> <td>15,00</td> </tr>
-                    <tr> <td>H2O</td> <td>8,00</td> </tr>
-                    <tr> <td>Água sem gás</td> <td>3,00</td> </tr>
-                    <tr> <td>Água com gás</td> <td>4,00</td> </tr>
-                    <tr> <td>Creme Caju 500ml</td> <td>15,00</td> </tr>
-                    <tr> <td>Creme Cupuaçu 500ml</td> <td>15,00</td> </tr>
-                    <tr> <td>Creme Maracujá 500ml</td> <td>15,00</td> </tr>
-                    <tr> <td>Creme Morango 500ml</td> <td>15,00</td> </tr>
+                    <tr> <td>🍊 Caldo de Laranja 500ml</td> <td>12,00</td> </tr>
+                    <tr> <td>🍊 Suco Laranja 500ml</td> <td>10,00</td> </tr>
+                    <tr> <td>🧃 Suco Caju 500ml</td> <td>10,00</td> </tr>
+                    <tr> <td>🧃 Suco Maracujá 500ml</td> <td>12,00</td> </tr>
+                    <tr> <td>🍓 Suco Morango 500ml</td> <td>10,00</td> </tr>
+                    <tr> <td>🥤 Refrigerante lata 350ml</td> <td>7,00</td> </tr>
+                    <tr> <td>🥤 Refrigerante 600ml</td> <td>10,00</td> </tr>
+                    <tr> <td>🥤 Refrigerante 1,5L</td> <td>12,00</td> </tr>
+                    <tr> <td>🥤 Refrigerante 2L</td> <td>15,00</td> </tr>
+                    <tr> <td>💧 H2O</td> <td>8,00</td> </tr>
+                    <tr> <td>💧 Água sem gás</td> <td>3,00</td> </tr>
+                    <tr> <td>💧 Água com gás</td> <td>4,00</td> </tr>
+                    <tr> <td>🥛 Creme Caju 500ml</td> <td>15,00</td> </tr>
+                    <tr> <td>🥛 Creme Cupuaçu 500ml</td> <td>15,00</td> </tr>
+                    <tr> <td>🥛 Creme Maracujá 500ml</td> <td>15,00</td> </tr>
+                    <tr> <td>🥛 Creme Morango 500ml</td> <td>15,00</td> </tr>
                 </tbody>
             </table>
         </section>
@@ -558,11 +566,13 @@
             const navItems = document.querySelectorAll('.menu-nav-item');
             const menuSections = document.querySelectorAll('.menu-section');
             const scrollTopButton = document.getElementById('scrollTop');
+            const menuItems = document.querySelectorAll('.menu-item');
 
             // Inicialização
             initNavigation();
             addAnimationEffects();
             initScrollTopButton();
+            createFireParticles();
 
             // Função para inicializar a navegação
             function initNavigation() {
@@ -614,17 +624,12 @@
 
             // Adicionar efeitos de animação
             function addAnimationEffects() {
-                const menuItems = document.querySelectorAll('.menu-item');
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('animate-in');
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, { threshold: 0.1 });
-                menuItems.forEach(item => { observer.observe(item); });
+                // Adicionar classe para animação de entrada
+                menuItems.forEach(item => {
+                    item.classList.add('animate-in');
+                });
 
+                // Efeito de toque para dispositivos móveis
                 menuItems.forEach(item => {
                     item.addEventListener('touchstart', function() { this.classList.add('touch-active'); });
                     item.addEventListener('touchend', function() { this.classList.remove('touch-active'); });
@@ -661,7 +666,6 @@
             }
 
             // Iniciar partículas de fogo e recriar periodicamente
-            createFireParticles();
             setInterval(createFireParticles, 6000); // Recria a cada 6 segundos
 
             // Botão Voltar ao Topo
