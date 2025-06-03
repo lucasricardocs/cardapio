@@ -81,14 +81,51 @@
       justify-content: flex-end;
       width: 100%;
       max-width: 400px;
-      height: 240px;
+      height: 260px;
       margin: 2.5rem auto 1rem auto;
       pointer-events: none;
+    }
+    /* Fagulhas ocupam todo o horizonte e vão acima da logo */
+    .embers {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 220px;
+      pointer-events: none;
+      z-index: 1; /* atrás da logo e do fogo */
+      overflow: visible;
+    }
+    .ember {
+      position: absolute;
+      bottom: 0;
+      width: 6px;
+      height: 6px;
+      background: radial-gradient(circle, #ffed8b 60%, #ff9800 100%);
+      border-radius: 50%;
+      opacity: 0.8;
+      pointer-events: none;
+      animation: ember-rise 2.2s linear forwards;
+      will-change: transform, opacity;
+    }
+    @keyframes ember-rise {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+      }
+      60% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-220px) scale(0.6);
+        opacity: 0;
+      }
     }
     .fire-logo {
       position: absolute;
       left: 50%;
-      bottom: 60px;
+      bottom: 0;
       transform: translateX(-50%);
       z-index: 5;
       max-width: 170px;
@@ -110,7 +147,7 @@
       transform: translateX(-50%);
       width: 200px;
       height: 110px;
-      z-index: 2;
+      z-index: 10;
       pointer-events: none;
       overflow: visible;
     }
@@ -120,7 +157,7 @@
       border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
       transform-origin: center bottom;
       animation: flicker 0.5s ease-in-out infinite alternate;
-      z-index: 10;
+      z-index: 11;
     }
     @keyframes flicker {
       0% { opacity: 0.8; }
@@ -155,51 +192,13 @@
       box-shadow: 0 0 15px #ffffff, 0 0 30px #ffff99;
       animation-duration: 0.3s; animation-delay: 0.1s;
     }
-    /* Fagulhas */
-    .embers {
-      position: absolute;
-      left: 50%;
-      bottom: 70px;
-      transform: translateX(-50%);
-      width: 110px;
-      height: 100px;
-      pointer-events: none;
-      z-index: 20;
-      overflow: visible;
-    }
-    .ember {
-      position: absolute;
-      left: 50%;
-      bottom: 0;
-      width: 6px;
-      height: 6px;
-      background: radial-gradient(circle, #ffed8b 60%, #ff9800 100%);
-      border-radius: 50%;
-      opacity: 0.8;
-      pointer-events: none;
-      animation: ember-rise 1.6s linear forwards;
-      will-change: transform, opacity;
-    }
-    @keyframes ember-rise {
-      0% {
-        transform: translateX(0) scale(1);
-        opacity: 0.8;
-      }
-      60% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateX(var(--ember-x, 0px)) translateY(-90px) scale(0.7);
-        opacity: 0;
-      }
-    }
     /* Responsivo */
     @media (max-width: 600px) {
       .container { padding: 0.7rem;}
       .logo-fire-stack { height: 150px;}
-      .fire-logo { max-width: 110px; bottom: 40px;}
+      .fire-logo { max-width: 110px; }
       .fire-base { width: 110px; height: 60px;}
-      .embers { width: 60px; height: 60px; bottom: 40px;}
+      .embers { height: 120px;}
       table, th, td { font-size: 0.95rem;}
     }
     table {
@@ -235,6 +234,7 @@
 <body>
   <!-- LOGO + FOGUEIRA + FAGULHAS -->
   <div class="logo-fire-stack">
+    <div class="embers"></div>
     <img src="https://raw.githubusercontent.com/lucasricardocs/clips_dashboard/main/logo.png" class="fire-logo" alt="Clips Burger Logo">
     <div class="fire-base">
       <div class="flame flame-red"></div>
@@ -242,9 +242,7 @@
       <div class="flame flame-yellow"></div>
       <div class="flame flame-white"></div>
     </div>
-    <div class="embers"></div>
   </div>
-
   <div class="container">
     <h1>Cardápio</h1>
     <div class="menu-section">
@@ -339,26 +337,28 @@
     </div>
   </div>
   <script>
-    // FAGULHAS SUBINDO
+    // FAGULHAS: surgem de vários pontos do horizonte, vão acima da logo, passam atrás
     const embersDiv = document.querySelector('.embers');
     function spawnEmber() {
       const ember = document.createElement('div');
       ember.className = 'ember';
-      // Fagulhas saem do centro, mas com leve variação lateral
-      const x = (Math.random() - 0.5) * 60; // -30px a +30px
-      ember.style.setProperty('--ember-x', `${x}px`);
-      // Duração aleatória
-      ember.style.animationDuration = (1.2 + Math.random() * 0.8) + 's';
-      ember.style.width = ember.style.height = (4 + Math.random() * 4) + 'px';
+
+      // Posição inicial aleatória ao longo do horizonte (0% a 100% do container)
+      const leftPercent = Math.random() * 100;
+      ember.style.left = `calc(${leftPercent}% - 3px)`; // centraliza fagulha
+
+      // Duração e tamanho aleatórios
+      ember.style.animationDuration = (1.5 + Math.random() * 1.2) + 's';
+      const size = 4 + Math.random() * 4;
+      ember.style.width = ember.style.height = size + 'px';
       ember.style.opacity = 0.7 + Math.random() * 0.3;
+
       embersDiv.appendChild(ember);
-      // Remover fagulha ao fim da animação
       ember.addEventListener('animationend', () => ember.remove());
     }
-    // Gera fagulhas em intervalos aleatórios
     setInterval(() => {
-      if (Math.random() > 0.5) spawnEmber();
-    }, 150);
+      if (Math.random() > 0.3) spawnEmber();
+    }, 100);
   </script>
 </body>
 </html>
