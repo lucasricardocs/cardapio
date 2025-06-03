@@ -5,7 +5,6 @@
   <title>Clips Burger - Cardápio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    /* --- Estilo inspirado no código fornecido --- */
     body {
       background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
       color: #f8fafc;
@@ -73,58 +72,60 @@
       font-size: 1.1rem;
       align-self: flex-end;
     }
-    /* Logo com efeito de fogo */
-    .logo-fire-container {
+    /* LOGO + FOGUEIRA + FAGULHAS */
+    .logo-fire-stack {
       position: relative;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      margin: 2.5rem auto 1rem auto;
-      height: 220px;
+      justify-content: flex-end;
       width: 100%;
       max-width: 400px;
-      overflow: visible;
-      z-index: 1;
+      height: 240px;
+      margin: 2.5rem auto 1rem auto;
+      pointer-events: none;
     }
     .fire-logo {
-      position: relative;
-      z-index: 50;
+      position: absolute;
+      left: 50%;
+      bottom: 60px;
+      transform: translateX(-50%);
+      z-index: 5;
       max-width: 170px;
       width: auto;
       height: auto;
       object-fit: contain;
-      filter: drop-shadow(0 0 20px rgba(255,69,0,0.8));
+      filter: drop-shadow(0 0 20px rgba(255,69,0,0.7));
       animation: logoFloat 3s ease-in-out infinite;
-      display: block;
-      margin: 0 auto;
+      pointer-events: auto;
     }
     @keyframes logoFloat {
-      0%,100% { transform: translateY(0px) scale(1);}
-      50% { transform: translateY(-10px) scale(1.05);}
+      0%,100% { transform: translateX(-50%) translateY(0px) scale(1);}
+      50% { transform: translateX(-50%) translateY(-10px) scale(1.05);}
     }
-    .fire-container {
+    .fire-base {
       position: absolute;
-      bottom: -25px;
       left: 50%;
+      bottom: 0;
       transform: translateX(-50%);
       width: 200px;
-      height: 100px;
-      z-index: 1;
+      height: 110px;
+      z-index: 2;
       pointer-events: none;
       overflow: visible;
     }
     .flame {
       position: absolute;
-      bottom: 0;
+      bottom: 20px;
       border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
       transform-origin: center bottom;
       animation: flicker 0.5s ease-in-out infinite alternate;
       z-index: 10;
     }
     @keyframes flicker {
-      0% { opacity: 0.8;}
-      50% { opacity: 1;}
-      100% { opacity: 0.9;}
+      0% { opacity: 0.8; }
+      50% { opacity: 1; }
+      100% { opacity: 0.9; }
     }
     .flame-red {
       left: 50%; transform: translateX(-50%);
@@ -154,7 +155,53 @@
       box-shadow: 0 0 15px #ffffff, 0 0 30px #ffff99;
       animation-duration: 0.3s; animation-delay: 0.1s;
     }
-    /* Tabela para adicionais e bebidas */
+    /* Fagulhas */
+    .embers {
+      position: absolute;
+      left: 50%;
+      bottom: 70px;
+      transform: translateX(-50%);
+      width: 110px;
+      height: 100px;
+      pointer-events: none;
+      z-index: 20;
+      overflow: visible;
+    }
+    .ember {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 6px;
+      height: 6px;
+      background: radial-gradient(circle, #ffed8b 60%, #ff9800 100%);
+      border-radius: 50%;
+      opacity: 0.8;
+      pointer-events: none;
+      animation: ember-rise 1.6s linear forwards;
+      will-change: transform, opacity;
+    }
+    @keyframes ember-rise {
+      0% {
+        transform: translateX(0) scale(1);
+        opacity: 0.8;
+      }
+      60% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(var(--ember-x, 0px)) translateY(-90px) scale(0.7);
+        opacity: 0;
+      }
+    }
+    /* Responsivo */
+    @media (max-width: 600px) {
+      .container { padding: 0.7rem;}
+      .logo-fire-stack { height: 150px;}
+      .fire-logo { max-width: 110px; bottom: 40px;}
+      .fire-base { width: 110px; height: 60px;}
+      .embers { width: 60px; height: 60px; bottom: 40px;}
+      table, th, td { font-size: 0.95rem;}
+    }
     table {
       width: 100%;
       border-collapse: collapse;
@@ -183,170 +230,60 @@
     tr:last-child td {
       border-bottom: none;
     }
-    @media (max-width: 600px) {
-      .container { padding: 0.7rem;}
-      .logo-fire-container { height: 150px;}
-      .fire-logo { max-width: 110px;}
-      table, th, td { font-size: 0.95rem;}
-    }
   </style>
 </head>
 <body>
-
-  <div class="logo-fire-container">
+  <!-- LOGO + FOGUEIRA + FAGULHAS -->
+  <div class="logo-fire-stack">
     <img src="https://raw.githubusercontent.com/lucasricardocs/clips_dashboard/main/logo.png" class="fire-logo" alt="Clips Burger Logo">
-    <div class="fire-container">
+    <div class="fire-base">
       <div class="flame flame-red"></div>
       <div class="flame flame-orange"></div>
       <div class="flame flame-yellow"></div>
       <div class="flame flame-white"></div>
     </div>
+    <div class="embers"></div>
   </div>
 
   <div class="container">
     <h1>Cardápio</h1>
-
     <div class="menu-section">
       <h2>🍔 Hambúrguer</h2>
-      <div class="menu-item">
-        <span class="item-title">X-Salada Simples</span>
-        <span class="item-desc">Pão, hambúrguer, presunto, muçarela, salada, milho e batata</span>
-        <span class="item-price">R$ 18,00</span>
-      </div>
-      <div class="menu-item">
-        <span class="item-title">X-Salada Especial</span>
-        <span class="item-desc">Pão, hambúrguer, ovo, presunto, muçarela, salada, milho e batata</span>
-        <span class="item-price">R$ 20,00</span>
-      </div>
-      <div class="menu-item">
-        <span class="item-title">X-Especial Duplo</span>
-        <span class="item-desc">Pão, 2 hambúrgueres, ovo, muçarela, presunto, salada, milho e batata</span>
-        <span class="item-price">R$ 24,00</span>
-      </div>
-      <div class="menu-item">
-        <span class="item-title">X-Bacon Simples</span>
-        <span class="item-desc">Pão, hambúrguer, bacon, presunto, muçarela, salada, milho e batata</span>
-        <span class="item-price">R$ 22,00</span>
-      </div>
-      <div class="menu-item">
-        <span class="item-title">X-Bacon Especial</span>
-        <span class="item-desc">Pão, hambúrguer, bacon, ovo, presunto, muçarela, salada, milho e batata</span>
-        <span class="item-price">R$ 24,00</span>
-      </div>
-      <div class="menu-item">
-        <span class="item-title">X-Bacon Especial Duplo</span>
-        <span class="item-desc">Pão, 2 hambúrgueres, bacon, ovo, presunto, muçarela, salada, milho e batata</span>
-        <span class="item-price">R$ 27,00</span>
-      </div>
-      <div class="menu-item">
-        <span class="item-title">X-Tudo</span>
-        <span class="item-desc">Pão, hambúrguer, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</span>
-        <span class="item-price">R$ 27,00</span>
-      </div>
-      <div class="menu-item">
-        <span class="item-title">X-Hamburgão</span>
-        <span class="item-desc">Pão, 2 hambúrgueres, bacon, ovo, 2 salsichas, presunto, muçarela, salada, milho e batata</span>
-        <span class="item-price">R$ 35,00</span>
-      </div>
-      <div class="menu-item">
-        <span class="item-title">X-Mata Fome</span>
-        <span class="item-desc">Pão, 2 hambúrgueres, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</span>
-        <span class="item-price">R$ 39,00</span>
-      </div>
+      <div class="menu-item"><span class="item-title">X-Salada Simples</span><span class="item-desc">Pão, hambúrguer, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 18,00</span></div>
+      <div class="menu-item"><span class="item-title">X-Salada Especial</span><span class="item-desc">Pão, hambúrguer, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 20,00</span></div>
+      <div class="menu-item"><span class="item-title">X-Especial Duplo</span><span class="item-desc">Pão, 2 hambúrgueres, ovo, muçarela, presunto, salada, milho e batata</span><span class="item-price">R$ 24,00</span></div>
+      <div class="menu-item"><span class="item-title">X-Bacon Simples</span><span class="item-desc">Pão, hambúrguer, bacon, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 22,00</span></div>
+      <div class="menu-item"><span class="item-title">X-Bacon Especial</span><span class="item-desc">Pão, hambúrguer, bacon, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 24,00</span></div>
+      <div class="menu-item"><span class="item-title">X-Bacon Especial Duplo</span><span class="item-desc">Pão, 2 hambúrgueres, bacon, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 27,00</span></div>
+      <div class="menu-item"><span class="item-title">X-Tudo</span><span class="item-desc">Pão, hambúrguer, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 27,00</span></div>
+      <div class="menu-item"><span class="item-title">X-Hamburgão</span><span class="item-desc">Pão, 2 hambúrgueres, bacon, ovo, 2 salsichas, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 35,00</span></div>
+      <div class="menu-item"><span class="item-title">X-Mata Fome</span><span class="item-desc">Pão, 2 hambúrgueres, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</span><span class="item-price">R$ 39,00</span></div>
     </div>
-
     <div class="menu-section">
       <h2>🍗 Frango</h2>
-      <div class="menu-item">
-        <span class="item-title">X-Frango Simples</span>
-        <span class="item-desc">Pão, filé de frango, presunto, muçarela, salada, milho e batata</span>
-        <span class="item-price">R$ 22,00</span>
-      </div>
-      <div class="menu-item">
-        <span class="item-title">X-Frango Especial</span>
-        <span class="item-desc">Pão, filé de frango, ovo, presunto, muçarela, salada, milho e batata</span>
-        <span class="item-price">R$ 24,00</span>
-      </div>
-      <div class="menu-item">
-        <span class="item-title">X-Frango Bacon</span>
-        <span class="item-desc">Pão, filé de frango, bacon, presunto, muçarela, salada, milho e batata</span>
-        <span class="item-price">R$ 27,00</span>
-      </div>
-      <div class="menu-item">
-        <span class="item-title">X-Frango Salsicha</span>
-        <span class="item-desc">Pão, filé de frango, salsicha, ovo, presunto, muçarela, salada, milho e batata</span>
-        <span class="item-price">R$ 27,00</span>
-      </div>
-      <div class="menu-item">
-        <span class="item-title">X-Frango Tudo</span>
-        <span class="item-desc">Pão, filé de frango, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</span>
-        <span class="item-price">R$ 30,00</span>
-      </div>
-      <div class="menu-item">
-        <span class="item-title">X-Frango Mata Fome</span>
-        <span class="item-desc">Pão, 2 filés de frango, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</span>
-        <span class="item-price">R$ 42,00</span>
-      </div>
+      <div class="menu-item"><span class="item-title">X-Frango Simples</span><span class="item-desc">Pão, filé de frango, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 22,00</span></div>
+      <div class="menu-item"><span class="item-title">X-Frango Especial</span><span class="item-desc">Pão, filé de frango, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 24,00</span></div>
+      <div class="menu-item"><span class="item-title">X-Frango Bacon</span><span class="item-desc">Pão, filé de frango, bacon, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 27,00</span></div>
+      <div class="menu-item"><span class="item-title">X-Frango Salsicha</span><span class="item-desc">Pão, filé de frango, salsicha, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 27,00</span></div>
+      <div class="menu-item"><span class="item-title">X-Frango Tudo</span><span class="item-desc">Pão, filé de frango, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 30,00</span></div>
+      <div class="menu-item"><span class="item-title">X-Frango Mata Fome</span><span class="item-desc">Pão, 2 filés de frango, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</span><span class="item-price">R$ 42,00</span></div>
     </div>
-
     <div class="menu-section">
       <h2>🐷 Lombo</h2>
-      <div class="menu-item">
-        <span class="item-title">X-Lombo Simples</span>
-        <span class="item-desc">Pão, lombo, presunto, muçarela, salada, milho e batata</span>
-        <span class="item-price">R$ 23,00</span>
-      </div>
-      <div class="menu-item">
-        <span class="item-title">X-Lombo Especial</span>
-        <span class="item-desc">Pão, lombo, ovo, presunto, muçarela, salada, milho e batata</span>
-        <span class="item-price">R$ 25,00</span>
-      </div>
-      <div class="menu-item">
-        <span class="item-title">X-Lombo Bacon</span>
-        <span class="item-desc">Pão, lombo, bacon, ovo, presunto, muçarela, salada, milho e batata</span>
-        <span class="item-price">R$ 28,00</span>
-      </div>
-      <div class="menu-item">
-        <span class="item-title">X-Lombo Tudo</span>
-        <span class="item-desc">Pão, lombo, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</span>
-        <span class="item-price">R$ 31,00</span>
-      </div>
-      <div class="menu-item">
-        <span class="item-title">X-Lombo Mata Fome</span>
-        <span class="item-desc">Pão, 2 lombos, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</span>
-        <span class="item-price">R$ 43,00</span>
-      </div>
+      <div class="menu-item"><span class="item-title">X-Lombo Simples</span><span class="item-desc">Pão, lombo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 23,00</span></div>
+      <div class="menu-item"><span class="item-title">X-Lombo Especial</span><span class="item-desc">Pão, lombo, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 25,00</span></div>
+      <div class="menu-item"><span class="item-title">X-Lombo Bacon</span><span class="item-desc">Pão, lombo, bacon, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 28,00</span></div>
+      <div class="menu-item"><span class="item-title">X-Lombo Tudo</span><span class="item-desc">Pão, lombo, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 31,00</span></div>
+      <div class="menu-item"><span class="item-title">X-Lombo Mata Fome</span><span class="item-desc">Pão, 2 lombos, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</span><span class="item-price">R$ 43,00</span></div>
     </div>
-
     <div class="menu-section">
       <h2>🥩 Filé</h2>
-      <div class="menu-item">
-        <span class="item-title">X-Filé Simples</span>
-        <span class="item-desc">Pão, filé bovino, presunto, muçarela, salada, milho e batata</span>
-        <span class="item-price">R$ 28,00</span>
-      </div>
-      <div class="menu-item">
-        <span class="item-title">X-Filé Especial</span>
-        <span class="item-desc">Pão, filé bovino, ovo, presunto, muçarela, salada, milho e batata</span>
-        <span class="item-price">R$ 30,00</span>
-      </div>
-      <div class="menu-item">
-        <span class="item-title">X-Filé Bacon</span>
-        <span class="item-desc">Pão, filé bovino, bacon, ovo, presunto, muçarela, salada, milho e batata</span>
-        <span class="item-price">R$ 33,00</span>
-      </div>
-      <div class="menu-item">
-        <span class="item-title">X-Filé Tudo</span>
-        <span class="item-desc">Pão, filé bovino, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</span>
-        <span class="item-price">R$ 36,00</span>
-      </div>
-      <div class="menu-item">
-        <span class="item-title">X-Filé Mata Fome</span>
-        <span class="item-desc">Pão, 2 filés bovinos, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</span>
-        <span class="item-price">R$ 43,00</span>
-      </div>
+      <div class="menu-item"><span class="item-title">X-Filé Simples</span><span class="item-desc">Pão, filé bovino, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 28,00</span></div>
+      <div class="menu-item"><span class="item-title">X-Filé Especial</span><span class="item-desc">Pão, filé bovino, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 30,00</span></div>
+      <div class="menu-item"><span class="item-title">X-Filé Bacon</span><span class="item-desc">Pão, filé bovino, bacon, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 33,00</span></div>
+      <div class="menu-item"><span class="item-title">X-Filé Tudo</span><span class="item-desc">Pão, filé bovino, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 36,00</span></div>
+      <div class="menu-item"><span class="item-title">X-Filé Mata Fome</span><span class="item-desc">Pão, 2 filés bovinos, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</span><span class="item-price">R$ 43,00</span></div>
     </div>
-
     <div class="menu-section">
       <h2>➕ Adicionais</h2>
       <table>
@@ -371,7 +308,6 @@
         </tbody>
       </table>
     </div>
-
     <div class="menu-section">
       <h2>🥤 Bebidas</h2>
       <table>
@@ -402,5 +338,27 @@
       </table>
     </div>
   </div>
+  <script>
+    // FAGULHAS SUBINDO
+    const embersDiv = document.querySelector('.embers');
+    function spawnEmber() {
+      const ember = document.createElement('div');
+      ember.className = 'ember';
+      // Fagulhas saem do centro, mas com leve variação lateral
+      const x = (Math.random() - 0.5) * 60; // -30px a +30px
+      ember.style.setProperty('--ember-x', `${x}px`);
+      // Duração aleatória
+      ember.style.animationDuration = (1.2 + Math.random() * 0.8) + 's';
+      ember.style.width = ember.style.height = (4 + Math.random() * 4) + 'px';
+      ember.style.opacity = 0.7 + Math.random() * 0.3;
+      embersDiv.appendChild(ember);
+      // Remover fagulha ao fim da animação
+      ember.addEventListener('animationend', () => ember.remove());
+    }
+    // Gera fagulhas em intervalos aleatórios
+    setInterval(() => {
+      if (Math.random() > 0.5) spawnEmber();
+    }, 150);
+  </script>
 </body>
 </html>
