@@ -14,31 +14,161 @@
       min-height: 100vh;
       overflow-x: hidden;
     }
-    .container {
-      max-width: 600px;
-      margin: 0 auto 2rem auto;
-      padding: 1.5rem;
-      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-      border-radius: 1.2rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      border: 1px solid #475569;
-      margin-top: 2rem;
-    }
-    h1, h2, h3 {
+    h1 {
       color: #f1f5f9;
       text-align: center;
-      margin-top: 0.5em;
-      margin-bottom: 1em;
+      margin-top: 1.5em;
+      margin-bottom: 1.5em;
       text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      font-size: 2rem;
+      letter-spacing: 2px;
     }
-    h2 {
-      font-size: 1.3rem;
-      margin-top: 2.5rem;
-      margin-bottom: 1.2rem;
+    /* CARD DE CADA PROTEÍNA */
+    .protein-card {
+      position: relative;
+      margin: 2.5rem auto;
+      max-width: 480px;
+      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+      border-radius: 1.5rem;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+      border: 2px solid transparent;
+      overflow: hidden;
+      padding: 2.5rem 1.2rem 1.5rem 1.2rem;
+      animation: glow 2.5s alternate infinite;
     }
-    .menu-section {
-      margin-bottom: 2rem;
+    @keyframes glow {
+      0% { box-shadow: 0 0 24px 2px #fbbf24, 0 0 0px 0px #f87171; }
+      100% { box-shadow: 0 0 36px 8px #f87171, 0 0 12px 2px #fbbf24; }
     }
+    .protein-title {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 0.8rem;
+      letter-spacing: 1px;
+      color: #fbbf24;
+      text-shadow: 0 2px 8px #000b;
+    }
+    /* LOGO + FOGO + FAGULHAS */
+    .logo-fire-stack {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      width: 100%;
+      max-width: 260px;
+      height: 200px;
+      margin: 0 auto 1.5rem auto;
+      pointer-events: none;
+    }
+    .embers {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 220px;
+      height: 220px;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 1;
+      overflow: visible;
+    }
+    .ember {
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      background: radial-gradient(circle, #ffed8b 60%, #ff9800 100%);
+      border-radius: 50%;
+      opacity: 0.8;
+      pointer-events: none;
+      animation: ember-rise-circular 2.2s linear forwards;
+      will-change: transform, opacity;
+    }
+    @keyframes ember-rise-circular {
+      0% {
+        opacity: 1;
+        transform: scale(1) translate(0, 0);
+      }
+      70% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        /* sobe para fora do círculo, com leve variação */
+        transform: scale(0.7) translate(var(--ember-x, 0px), var(--ember-y, -110px));
+      }
+    }
+    .fire-logo {
+      position: absolute;
+      left: 50%;
+      bottom: 60px;
+      transform: translateX(-50%);
+      z-index: 3;
+      max-width: 110px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 0 20px rgba(255,69,0,0.7));
+      animation: logoFloat 3s ease-in-out infinite;
+      pointer-events: auto;
+    }
+    @keyframes logoFloat {
+      0%,100% { transform: translateX(-50%) translateY(0px) scale(1);}
+      50% { transform: translateX(-50%) translateY(-10px) scale(1.05);}
+    }
+    .fire-base {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 70px;
+      z-index: 2;
+      pointer-events: none;
+      overflow: visible;
+    }
+    .flame {
+      position: absolute;
+      bottom: 10px;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      transform-origin: center bottom;
+      animation: flicker 0.5s ease-in-out infinite alternate;
+      z-index: 10;
+    }
+    @keyframes flicker {
+      0% { opacity: 0.8; }
+      50% { opacity: 1; }
+      100% { opacity: 0.9; }
+    }
+    .flame-red {
+      left: 50%; transform: translateX(-50%);
+      width: 38px; height: 58px;
+      background: radial-gradient(circle, #ff4500 0%, #ff6347 30%, #dc143c 70%, #8b0000 100%);
+      box-shadow: 0 0 30px #ff4500, 0 0 60px #ff6347;
+      animation-duration: 0.8s;
+    }
+    .flame-orange {
+      left: 43%; transform: translateX(-50%);
+      width: 28px; height: 36px;
+      background: radial-gradient(circle, #ffa500 0%, #ff8c00 50%, #ff4500 100%);
+      box-shadow: 0 0 25px #ffa500, 0 0 50px #ff8c00;
+      animation-duration: 0.6s; animation-delay: 0.2s;
+    }
+    .flame-yellow {
+      left: 57%; transform: translateX(-50%);
+      width: 15px; height: 22px;
+      background: radial-gradient(circle, #ffff00 0%, #ffd700 50%, #ffa500 100%);
+      box-shadow: 0 0 20px #ffff00, 0 0 40px #ffd700;
+      animation-duration: 0.4s; animation-delay: 0.4s;
+    }
+    .flame-white {
+      left: 50%; transform: translateX(-50%);
+      width: 9px; height: 13px;
+      background: radial-gradient(circle, #ffffff 0%, #ffff99 50%, #ffd700 100%);
+      box-shadow: 0 0 15px #ffffff, 0 0 30px #ffff99;
+      animation-duration: 0.3s; animation-delay: 0.1s;
+    }
+    /* ITENS DO CARDÁPIO */
     .menu-item {
       background: linear-gradient(135deg, #334155 0%, #475569 100%);
       border-radius: 1rem;
@@ -72,135 +202,7 @@
       font-size: 1.1rem;
       align-self: flex-end;
     }
-    /* LOGO + FOGUEIRA + FAGULHAS */
-    .logo-fire-stack {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-end;
-      width: 100%;
-      max-width: 400px;
-      height: 260px;
-      margin: 2.5rem auto 1rem auto;
-      pointer-events: none;
-    }
-    /* Fagulhas ocupam todo o horizonte e vão acima da logo */
-    .embers {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      width: 100%;
-      height: 220px;
-      pointer-events: none;
-      z-index: 1; /* atrás da logo e do fogo */
-      overflow: visible;
-    }
-    .ember {
-      position: absolute;
-      bottom: 0;
-      width: 6px;
-      height: 6px;
-      background: radial-gradient(circle, #ffed8b 60%, #ff9800 100%);
-      border-radius: 50%;
-      opacity: 0.8;
-      pointer-events: none;
-      animation: ember-rise 2.2s linear forwards;
-      will-change: transform, opacity;
-    }
-    @keyframes ember-rise {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 0.8;
-      }
-      60% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-220px) scale(0.6);
-        opacity: 0;
-      }
-    }
-    .fire-logo {
-      position: absolute;
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%);
-      z-index: 5;
-      max-width: 170px;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 0 20px rgba(255,69,0,0.7));
-      animation: logoFloat 3s ease-in-out infinite;
-      pointer-events: auto;
-    }
-    @keyframes logoFloat {
-      0%,100% { transform: translateX(-50%) translateY(0px) scale(1);}
-      50% { transform: translateX(-50%) translateY(-10px) scale(1.05);}
-    }
-    .fire-base {
-      position: absolute;
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%);
-      width: 200px;
-      height: 110px;
-      z-index: 10;
-      pointer-events: none;
-      overflow: visible;
-    }
-    .flame {
-      position: absolute;
-      bottom: 20px;
-      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-      transform-origin: center bottom;
-      animation: flicker 0.5s ease-in-out infinite alternate;
-      z-index: 11;
-    }
-    @keyframes flicker {
-      0% { opacity: 0.8; }
-      50% { opacity: 1; }
-      100% { opacity: 0.9; }
-    }
-    .flame-red {
-      left: 50%; transform: translateX(-50%);
-      width: 60px; height: 90px;
-      background: radial-gradient(circle, #ff4500 0%, #ff6347 30%, #dc143c 70%, #8b0000 100%);
-      box-shadow: 0 0 30px #ff4500, 0 0 60px #ff6347;
-      animation-duration: 0.8s;
-    }
-    .flame-orange {
-      left: 43%; transform: translateX(-50%);
-      width: 40px; height: 60px;
-      background: radial-gradient(circle, #ffa500 0%, #ff8c00 50%, #ff4500 100%);
-      box-shadow: 0 0 25px #ffa500, 0 0 50px #ff8c00;
-      animation-duration: 0.6s; animation-delay: 0.2s;
-    }
-    .flame-yellow {
-      left: 57%; transform: translateX(-50%);
-      width: 25px; height: 40px;
-      background: radial-gradient(circle, #ffff00 0%, #ffd700 50%, #ffa500 100%);
-      box-shadow: 0 0 20px #ffff00, 0 0 40px #ffd700;
-      animation-duration: 0.4s; animation-delay: 0.4s;
-    }
-    .flame-white {
-      left: 50%; transform: translateX(-50%);
-      width: 15px; height: 25px;
-      background: radial-gradient(circle, #ffffff 0%, #ffff99 50%, #ffd700 100%);
-      box-shadow: 0 0 15px #ffffff, 0 0 30px #ffff99;
-      animation-duration: 0.3s; animation-delay: 0.1s;
-    }
-    /* Responsivo */
-    @media (max-width: 600px) {
-      .container { padding: 0.7rem;}
-      .logo-fire-stack { height: 150px;}
-      .fire-logo { max-width: 110px; }
-      .fire-base { width: 110px; height: 60px;}
-      .embers { height: 120px;}
-      table, th, td { font-size: 0.95rem;}
-    }
+    /* TABELAS */
     table {
       width: 100%;
       border-collapse: collapse;
@@ -229,136 +231,185 @@
     tr:last-child td {
       border-bottom: none;
     }
+    @media (max-width: 600px) {
+      .protein-card { padding: 1.2rem 0.2rem 1rem 0.2rem;}
+      .logo-fire-stack { height: 120px; max-width: 140px;}
+      .embers { width: 110px; height: 110px;}
+      .fire-logo { max-width: 60px; bottom: 32px;}
+      .fire-base { width: 60px; height: 32px;}
+      table, th, td { font-size: 0.93rem;}
+    }
   </style>
 </head>
 <body>
-  <!-- LOGO + FOGUEIRA + FAGULHAS -->
-  <div class="logo-fire-stack">
-    <div class="embers"></div>
-    <img src="https://raw.githubusercontent.com/lucasricardocs/clips_dashboard/main/logo.png" class="fire-logo" alt="Clips Burger Logo">
-    <div class="fire-base">
-      <div class="flame flame-red"></div>
-      <div class="flame flame-orange"></div>
-      <div class="flame flame-yellow"></div>
-      <div class="flame flame-white"></div>
+  <h1>Cardápio</h1>
+  <!-- HAMBÚRGUER -->
+  <div class="protein-card">
+    <div class="protein-title">🍔 Hambúrguer</div>
+    <div class="logo-fire-stack">
+      <div class="embers"></div>
+      <img src="https://raw.githubusercontent.com/lucasricardocs/clips_dashboard/main/logo.png" class="fire-logo" alt="Clips Burger Logo">
+      <div class="fire-base">
+        <div class="flame flame-red"></div>
+        <div class="flame flame-orange"></div>
+        <div class="flame flame-yellow"></div>
+        <div class="flame flame-white"></div>
+      </div>
     </div>
+    <div class="menu-item"><span class="item-title">X-Salada Simples</span><span class="item-desc">Pão, hambúrguer, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 18,00</span></div>
+    <div class="menu-item"><span class="item-title">X-Salada Especial</span><span class="item-desc">Pão, hambúrguer, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 20,00</span></div>
+    <div class="menu-item"><span class="item-title">X-Especial Duplo</span><span class="item-desc">Pão, 2 hambúrgueres, ovo, muçarela, presunto, salada, milho e batata</span><span class="item-price">R$ 24,00</span></div>
+    <div class="menu-item"><span class="item-title">X-Bacon Simples</span><span class="item-desc">Pão, hambúrguer, bacon, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 22,00</span></div>
+    <div class="menu-item"><span class="item-title">X-Bacon Especial</span><span class="item-desc">Pão, hambúrguer, bacon, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 24,00</span></div>
+    <div class="menu-item"><span class="item-title">X-Bacon Especial Duplo</span><span class="item-desc">Pão, 2 hambúrgueres, bacon, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 27,00</span></div>
+    <div class="menu-item"><span class="item-title">X-Tudo</span><span class="item-desc">Pão, hambúrguer, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 27,00</span></div>
+    <div class="menu-item"><span class="item-title">X-Hamburgão</span><span class="item-desc">Pão, 2 hambúrgueres, bacon, ovo, 2 salsichas, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 35,00</span></div>
+    <div class="menu-item"><span class="item-title">X-Mata Fome</span><span class="item-desc">Pão, 2 hambúrgueres, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</span><span class="item-price">R$ 39,00</span></div>
   </div>
-  <div class="container">
-    <h1>Cardápio</h1>
-    <div class="menu-section">
-      <h2>🍔 Hambúrguer</h2>
-      <div class="menu-item"><span class="item-title">X-Salada Simples</span><span class="item-desc">Pão, hambúrguer, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 18,00</span></div>
-      <div class="menu-item"><span class="item-title">X-Salada Especial</span><span class="item-desc">Pão, hambúrguer, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 20,00</span></div>
-      <div class="menu-item"><span class="item-title">X-Especial Duplo</span><span class="item-desc">Pão, 2 hambúrgueres, ovo, muçarela, presunto, salada, milho e batata</span><span class="item-price">R$ 24,00</span></div>
-      <div class="menu-item"><span class="item-title">X-Bacon Simples</span><span class="item-desc">Pão, hambúrguer, bacon, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 22,00</span></div>
-      <div class="menu-item"><span class="item-title">X-Bacon Especial</span><span class="item-desc">Pão, hambúrguer, bacon, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 24,00</span></div>
-      <div class="menu-item"><span class="item-title">X-Bacon Especial Duplo</span><span class="item-desc">Pão, 2 hambúrgueres, bacon, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 27,00</span></div>
-      <div class="menu-item"><span class="item-title">X-Tudo</span><span class="item-desc">Pão, hambúrguer, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 27,00</span></div>
-      <div class="menu-item"><span class="item-title">X-Hamburgão</span><span class="item-desc">Pão, 2 hambúrgueres, bacon, ovo, 2 salsichas, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 35,00</span></div>
-      <div class="menu-item"><span class="item-title">X-Mata Fome</span><span class="item-desc">Pão, 2 hambúrgueres, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</span><span class="item-price">R$ 39,00</span></div>
+  <!-- FRANGO -->
+  <div class="protein-card">
+    <div class="protein-title">🍗 Frango</div>
+    <div class="logo-fire-stack">
+      <div class="embers"></div>
+      <img src="https://raw.githubusercontent.com/lucasricardocs/clips_dashboard/main/logo.png" class="fire-logo" alt="Clips Burger Logo">
+      <div class="fire-base">
+        <div class="flame flame-red"></div>
+        <div class="flame flame-orange"></div>
+        <div class="flame flame-yellow"></div>
+        <div class="flame flame-white"></div>
+      </div>
     </div>
-    <div class="menu-section">
-      <h2>🍗 Frango</h2>
-      <div class="menu-item"><span class="item-title">X-Frango Simples</span><span class="item-desc">Pão, filé de frango, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 22,00</span></div>
-      <div class="menu-item"><span class="item-title">X-Frango Especial</span><span class="item-desc">Pão, filé de frango, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 24,00</span></div>
-      <div class="menu-item"><span class="item-title">X-Frango Bacon</span><span class="item-desc">Pão, filé de frango, bacon, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 27,00</span></div>
-      <div class="menu-item"><span class="item-title">X-Frango Salsicha</span><span class="item-desc">Pão, filé de frango, salsicha, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 27,00</span></div>
-      <div class="menu-item"><span class="item-title">X-Frango Tudo</span><span class="item-desc">Pão, filé de frango, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 30,00</span></div>
-      <div class="menu-item"><span class="item-title">X-Frango Mata Fome</span><span class="item-desc">Pão, 2 filés de frango, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</span><span class="item-price">R$ 42,00</span></div>
+    <div class="menu-item"><span class="item-title">X-Frango Simples</span><span class="item-desc">Pão, filé de frango, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 22,00</span></div>
+    <div class="menu-item"><span class="item-title">X-Frango Especial</span><span class="item-desc">Pão, filé de frango, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 24,00</span></div>
+    <div class="menu-item"><span class="item-title">X-Frango Bacon</span><span class="item-desc">Pão, filé de frango, bacon, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 27,00</span></div>
+    <div class="menu-item"><span class="item-title">X-Frango Salsicha</span><span class="item-desc">Pão, filé de frango, salsicha, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 27,00</span></div>
+    <div class="menu-item"><span class="item-title">X-Frango Tudo</span><span class="item-desc">Pão, filé de frango, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 30,00</span></div>
+    <div class="menu-item"><span class="item-title">X-Frango Mata Fome</span><span class="item-desc">Pão, 2 filés de frango, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</span><span class="item-price">R$ 42,00</span></div>
+  </div>
+  <!-- LOMBO -->
+  <div class="protein-card">
+    <div class="protein-title">🐷 Lombo</div>
+    <div class="logo-fire-stack">
+      <div class="embers"></div>
+      <img src="https://raw.githubusercontent.com/lucasricardocs/clips_dashboard/main/logo.png" class="fire-logo" alt="Clips Burger Logo">
+      <div class="fire-base">
+        <div class="flame flame-red"></div>
+        <div class="flame flame-orange"></div>
+        <div class="flame flame-yellow"></div>
+        <div class="flame flame-white"></div>
+      </div>
     </div>
-    <div class="menu-section">
-      <h2>🐷 Lombo</h2>
-      <div class="menu-item"><span class="item-title">X-Lombo Simples</span><span class="item-desc">Pão, lombo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 23,00</span></div>
-      <div class="menu-item"><span class="item-title">X-Lombo Especial</span><span class="item-desc">Pão, lombo, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 25,00</span></div>
-      <div class="menu-item"><span class="item-title">X-Lombo Bacon</span><span class="item-desc">Pão, lombo, bacon, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 28,00</span></div>
-      <div class="menu-item"><span class="item-title">X-Lombo Tudo</span><span class="item-desc">Pão, lombo, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 31,00</span></div>
-      <div class="menu-item"><span class="item-title">X-Lombo Mata Fome</span><span class="item-desc">Pão, 2 lombos, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</span><span class="item-price">R$ 43,00</span></div>
+    <div class="menu-item"><span class="item-title">X-Lombo Simples</span><span class="item-desc">Pão, lombo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 23,00</span></div>
+    <div class="menu-item"><span class="item-title">X-Lombo Especial</span><span class="item-desc">Pão, lombo, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 25,00</span></div>
+    <div class="menu-item"><span class="item-title">X-Lombo Bacon</span><span class="item-desc">Pão, lombo, bacon, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 28,00</span></div>
+    <div class="menu-item"><span class="item-title">X-Lombo Tudo</span><span class="item-desc">Pão, lombo, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 31,00</span></div>
+    <div class="menu-item"><span class="item-title">X-Lombo Mata Fome</span><span class="item-desc">Pão, 2 lombos, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</span><span class="item-price">R$ 43,00</span></div>
+  </div>
+  <!-- FILÉ -->
+  <div class="protein-card">
+    <div class="protein-title">🥩 Filé</div>
+    <div class="logo-fire-stack">
+      <div class="embers"></div>
+      <img src="https://raw.githubusercontent.com/lucasricardocs/clips_dashboard/main/logo.png" class="fire-logo" alt="Clips Burger Logo">
+      <div class="fire-base">
+        <div class="flame flame-red"></div>
+        <div class="flame flame-orange"></div>
+        <div class="flame flame-yellow"></div>
+        <div class="flame flame-white"></div>
+      </div>
     </div>
-    <div class="menu-section">
-      <h2>🥩 Filé</h2>
-      <div class="menu-item"><span class="item-title">X-Filé Simples</span><span class="item-desc">Pão, filé bovino, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 28,00</span></div>
-      <div class="menu-item"><span class="item-title">X-Filé Especial</span><span class="item-desc">Pão, filé bovino, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 30,00</span></div>
-      <div class="menu-item"><span class="item-title">X-Filé Bacon</span><span class="item-desc">Pão, filé bovino, bacon, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 33,00</span></div>
-      <div class="menu-item"><span class="item-title">X-Filé Tudo</span><span class="item-desc">Pão, filé bovino, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 36,00</span></div>
-      <div class="menu-item"><span class="item-title">X-Filé Mata Fome</span><span class="item-desc">Pão, 2 filés bovinos, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</span><span class="item-price">R$ 43,00</span></div>
-    </div>
-    <div class="menu-section">
-      <h2>➕ Adicionais</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Preço (R$)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Hambúrguer</td><td>8,00</td></tr>
-          <tr><td>Filé de frango</td><td>12,00</td></tr>
-          <tr><td>Filé bovino</td><td>15,00</td></tr>
-          <tr><td>Lombo</td><td>12,00</td></tr>
-          <tr><td>Bacon</td><td>6,00</td></tr>
-          <tr><td>Salsicha</td><td>5,00</td></tr>
-          <tr><td>Ovo</td><td>5,00</td></tr>
-          <tr><td>Muçarela</td><td>6,00</td></tr>
-          <tr><td>Abacaxi</td><td>2,00</td></tr>
-          <tr><td>Molho da Casa</td><td>2,00</td></tr>
-          <tr><td>Cebola</td><td>2,00</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="menu-section">
-      <h2>🥤 Bebidas</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Preço (R$)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Caldo de Laranja 500ml</td><td>12,00</td></tr>
-          <tr><td>Suco Laranja 500ml</td><td>10,00</td></tr>
-          <tr><td>Suco Caju 500ml</td><td>10,00</td></tr>
-          <tr><td>Suco Maracujá 500ml</td><td>12,00</td></tr>
-          <tr><td>Suco Morango 500ml</td><td>10,00</td></tr>
-          <tr><td>Refrigerante lata 350ml</td><td>7,00</td></tr>
-          <tr><td>Refrigerante 600ml</td><td>10,00</td></tr>
-          <tr><td>Refrigerante 1,5L</td><td>12,00</td></tr>
-          <tr><td>Refrigerante 2L</td><td>15,00</td></tr>
-          <tr><td>H2O</td><td>8,00</td></tr>
-          <tr><td>Água sem gás</td><td>3,00</td></tr>
-          <tr><td>Água com gás</td><td>4,00</td></tr>
-          <tr><td>Creme Caju 500ml</td><td>15,00</td></tr>
-          <tr><td>Creme Cupuaçu 500ml</td><td>15,00</td></tr>
-          <tr><td>Creme Maracujá 500ml</td><td>15,00</td></tr>
-          <tr><td>Creme Morango 500ml</td><td>15,00</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="menu-item"><span class="item-title">X-Filé Simples</span><span class="item-desc">Pão, filé bovino, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 28,00</span></div>
+    <div class="menu-item"><span class="item-title">X-Filé Especial</span><span class="item-desc">Pão, filé bovino, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 30,00</span></div>
+    <div class="menu-item"><span class="item-title">X-Filé Bacon</span><span class="item-desc">Pão, filé bovino, bacon, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 33,00</span></div>
+    <div class="menu-item"><span class="item-title">X-Filé Tudo</span><span class="item-desc">Pão, filé bovino, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</span><span class="item-price">R$ 36,00</span></div>
+    <div class="menu-item"><span class="item-title">X-Filé Mata Fome</span><span class="item-desc">Pão, 2 filés bovinos, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</span><span class="item-price">R$ 43,00</span></div>
+  </div>
+  <!-- ADICIONAIS -->
+  <div class="protein-card">
+    <div class="protein-title">➕ Adicionais</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Preço (R$)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Hambúrguer</td><td>8,00</td></tr>
+        <tr><td>Filé de frango</td><td>12,00</td></tr>
+        <tr><td>Filé bovino</td><td>15,00</td></tr>
+        <tr><td>Lombo</td><td>12,00</td></tr>
+        <tr><td>Bacon</td><td>6,00</td></tr>
+        <tr><td>Salsicha</td><td>5,00</td></tr>
+        <tr><td>Ovo</td><td>5,00</td></tr>
+        <tr><td>Muçarela</td><td>6,00</td></tr>
+        <tr><td>Abacaxi</td><td>2,00</td></tr>
+        <tr><td>Molho da Casa</td><td>2,00</td></tr>
+        <tr><td>Cebola</td><td>2,00</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- BEBIDAS -->
+  <div class="protein-card">
+    <div class="protein-title">🥤 Bebidas</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Preço (R$)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Caldo de Laranja 500ml</td><td>12,00</td></tr>
+        <tr><td>Suco Laranja 500ml</td><td>10,00</td></tr>
+        <tr><td>Suco Caju 500ml</td><td>10,00</td></tr>
+        <tr><td>Suco Maracujá 500ml</td><td>12,00</td></tr>
+        <tr><td>Suco Morango 500ml</td><td>10,00</td></tr>
+        <tr><td>Refrigerante lata 350ml</td><td>7,00</td></tr>
+        <tr><td>Refrigerante 600ml</td><td>10,00</td></tr>
+        <tr><td>Refrigerante 1,5L</td><td>12,00</td></tr>
+        <tr><td>Refrigerante 2L</td><td>15,00</td></tr>
+        <tr><td>H2O</td><td>8,00</td></tr>
+        <tr><td>Água sem gás</td><td>3,00</td></tr>
+        <tr><td>Água com gás</td><td>4,00</td></tr>
+        <tr><td>Creme Caju 500ml</td><td>15,00</td></tr>
+        <tr><td>Creme Cupuaçu 500ml</td><td>15,00</td></tr>
+        <tr><td>Creme Maracujá 500ml</td><td>15,00</td></tr>
+        <tr><td>Creme Morango 500ml</td><td>15,00</td></tr>
+      </tbody>
+    </table>
   </div>
   <script>
-    // FAGULHAS: surgem de vários pontos do horizonte, vão acima da logo, passam atrás
-    const embersDiv = document.querySelector('.embers');
-    function spawnEmber() {
-      const ember = document.createElement('div');
-      ember.className = 'ember';
+    // Fagulhas circulares em volta da logo
+    document.querySelectorAll('.embers').forEach(function(embersDiv){
+      function spawnEmber() {
+        const ember = document.createElement('div');
+        ember.className = 'ember';
+        // Ângulo aleatório ao redor do círculo
+        const angle = Math.random() * 2 * Math.PI;
+        const radius = 50 + Math.random() * 40; // círculo de origem (50~90px do centro)
+        // Destino: sobe mais para fora do círculo, com leve variação
+        const destRadius = radius + 70 + Math.random() * 30;
+        const x0 = Math.cos(angle) * radius;
+        const y0 = Math.sin(angle) * radius;
+        const x1 = Math.cos(angle) * destRadius;
+        const y1 = Math.sin(angle) * destRadius * -1; // sobe para cima
 
-      // Posição inicial aleatória ao longo do horizonte (0% a 100% do container)
-      const leftPercent = Math.random() * 100;
-      ember.style.left = `calc(${leftPercent}% - 3px)`; // centraliza fagulha
-
-      // Duração e tamanho aleatórios
-      ember.style.animationDuration = (1.5 + Math.random() * 1.2) + 's';
-      const size = 4 + Math.random() * 4;
-      ember.style.width = ember.style.height = size + 'px';
-      ember.style.opacity = 0.7 + Math.random() * 0.3;
-
-      embersDiv.appendChild(ember);
-      ember.addEventListener('animationend', () => ember.remove());
-    }
-    setInterval(() => {
-      if (Math.random() > 0.3) spawnEmber();
-    }, 100);
+        ember.style.left = `calc(50% + ${x0}px)`;
+        ember.style.top = `calc(50% + ${y0}px)`;
+        ember.style.setProperty('--ember-x', `${x1 - x0}px`);
+        ember.style.setProperty('--ember-y', `${y1 - y0}px`);
+        ember.style.animationDuration = (1.5 + Math.random() * 1.3) + 's';
+        const size = 4 + Math.random() * 7;
+        ember.style.width = ember.style.height = size + 'px';
+        ember.style.opacity = 0.7 + Math.random() * 0.3;
+        embersDiv.appendChild(ember);
+        ember.addEventListener('animationend', () => ember.remove());
+      }
+      setInterval(() => {
+        if (Math.random() > 0.3) spawnEmber();
+      }, 110);
+    });
   </script>
 </body>
 </html>
