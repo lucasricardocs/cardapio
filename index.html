@@ -5,87 +5,109 @@
   <title>Clip's Burger - Cardápio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    /* Background escuro com gradiente e textura */
-    body {
+    html, body {
+      height: 100%;
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #0f172a 100%);
-      min-height: 100vh;
+      background: radial-gradient(ellipse at 50% 0%, #232b3a 0%, #151a24 100%);
       color: #f8fafc;
-      font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
-      background-attachment: fixed;
+      font-family: 'Segoe UI', 'Inter', Arial, Helvetica, sans-serif;
+      min-height: 100vh;
+      box-sizing: border-box;
     }
-    /* Logo animada com fogo e faíscas */
-    .logo-fire-container {
-      position: relative;
+    body {
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      margin: 2.5rem auto 1.5rem auto;
-      height: 200px;
-      max-width: 400px;
+      background-image: url('https://www.transparenttextures.com/patterns/diamond-upholstery.png');
+      background-repeat: repeat;
+    }
+    .header-area {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 2vw;
+      margin-top: 3vw;
+      margin-bottom: 2vw;
       width: 100%;
+      max-width: 900px;
+    }
+    .fire-visual {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      position: relative;
+      height: 260px;
+      width: 260px;
+      min-width: 200px;
+      min-height: 200px;
     }
     .fire-logo {
-      position: relative;
-      z-index: 10;
-      max-width: 200px;
-      width: 90vw;
-      height: auto;
-      filter: drop-shadow(0 0 20px rgba(255,69,0,0.7));
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 220px;
+      height: 220px;
+      z-index: 2;
+      filter: drop-shadow(0 0 32px #ffb30088);
       animation: logoFloat 3s ease-in-out infinite;
+      background: transparent;
     }
     @keyframes logoFloat {
-      0%, 100% { transform: translateY(0) scale(1);}
-      50% { transform: translateY(-12px) scale(1.05);}
+      0%, 100% { transform: translateX(-50%) translateY(0) scale(1);}
+      50% { transform: translateX(-50%) translateY(-18px) scale(1.07);}
     }
     .fire-container {
       position: absolute;
-      bottom: -30px;
+      bottom: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 260px;
-      height: 200px;
-      z-index: 2;
+      width: 220px;
+      height: 220px;
+      z-index: 1;
       pointer-events: none;
+      overflow: visible;
     }
     .flame {
       position: absolute;
       bottom: 0;
       border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
       transform-origin: center bottom;
-      animation: flicker 0.5s ease-in-out infinite alternate;
-      z-index: 5;
+      animation: flicker 0.7s ease-in-out infinite alternate;
+      z-index: 2;
     }
     @keyframes flicker {
-      0% { transform: translateX(-50%) rotate(-2deg) scaleY(1); opacity: 0.85;}
+      0% { transform: translateX(-50%) rotate(-2deg) scaleY(1); opacity: 0.82;}
       25% { transform: translateX(-50%) rotate(1deg) scaleY(1.1); opacity: 0.95;}
-      50% { transform: translateX(-50%) rotate(-1deg) scaleY(0.95); opacity: 1;}
-      75% { transform: translateX(-50%) rotate(2deg) scaleY(1.05); opacity: 0.9;}
-      100% { transform: translateX(-50%) rotate(-1deg) scaleY(1); opacity: 0.92;}
+      50% { transform: translateX(-50%) rotate(-1deg) scaleY(0.97); opacity: 1;}
+      75% { transform: translateX(-50%) rotate(2deg) scaleY(1.06); opacity: 0.92;}
+      100% { transform: translateX(-50%) rotate(-1deg) scaleY(1); opacity: 0.89;}
     }
     .flame-red {
-      left: 50%; width: 80px; height: 120px;
+      left: 50%; width: 110px; height: 140px;
       background: radial-gradient(circle, #ff4500 0%, #ff6347 30%, #dc143c 70%, #8b0000 100%);
-      box-shadow: 0 0 30px #ff4500, 0 0 60px #ff6347;
+      box-shadow: 0 0 40px #ff4500, 0 0 80px #ff6347;
       animation-duration: 0.8s;
     }
     .flame-orange {
-      left: 45%; width: 60px; height: 90px;
+      left: 44%; width: 80px; height: 100px;
       background: radial-gradient(circle, #ffa500 0%, #ff8c00 50%, #ff4500 100%);
-      box-shadow: 0 0 25px #ffa500;
+      box-shadow: 0 0 30px #ffa500;
       animation-duration: 0.6s; animation-delay: 0.2s;
     }
     .flame-yellow {
-      left: 55%; width: 40px; height: 70px;
+      left: 56%; width: 60px; height: 80px;
       background: radial-gradient(circle, #ffff00 0%, #ffd700 50%, #ffa500 100%);
-      box-shadow: 0 0 20px #ffff00;
+      box-shadow: 0 0 24px #ffff00;
       animation-duration: 0.4s; animation-delay: 0.4s;
     }
     .flame-white {
-      left: 50%; width: 25px; height: 50px;
+      left: 50%; width: 36px; height: 60px;
       background: radial-gradient(circle, #ffffff 0%, #ffff99 50%, #ffd700 100%);
-      box-shadow: 0 0 15px #ffffff;
+      box-shadow: 0 0 16px #ffffff;
       animation-duration: 0.3s; animation-delay: 0.1s;
     }
     .fire-particle {
@@ -99,64 +121,80 @@
     }
     @keyframes particle-rise-high {
       0% { bottom: 0px; opacity: 1; transform: translateX(0) scale(1);}
-      10% { bottom: 30px; opacity: 1; }
+      10% { bottom: 30px; opacity: 1;}
       25% { bottom: 60px; opacity: 0.9;}
-      40% { bottom: 100px; opacity: 0.7;}
-      60% { bottom: 140px; opacity: 0.6;}
-      80% { bottom: 180px; opacity: 0.3;}
-      100% { bottom: 200px; opacity: 0;}
+      40% { bottom: 110px; opacity: 0.7;}
+      60% { bottom: 160px; opacity: 0.6;}
+      80% { bottom: 200px; opacity: 0.3;}
+      100% { bottom: 220px; opacity: 0;}
     }
-    .fire-particle.small { width: 4px; height: 4px; background: #ff6347; box-shadow: 0 0 8px #ff6347;}
-    .fire-particle.medium { width: 6px; height: 6px; background: #ffa500; box-shadow: 0 0 10px #ffa500;}
-    .fire-particle.large { width: 8px; height: 8px; background: #ffff00; box-shadow: 0 0 12px #ffff00;}
+    .fire-particle.small { width: 6px; height: 6px; background: #ff6347; box-shadow: 0 0 8px #ff6347;}
+    .fire-particle.medium { width: 9px; height: 9px; background: #ffa500; box-shadow: 0 0 10px #ffa500;}
+    .fire-particle.large { width: 13px; height: 13px; background: #ffff00; box-shadow: 0 0 14px #ffff00;}
     .fire-particle:nth-child(5n+1) { left: 5%; animation-delay: 0.2s; animation-duration: 4.5s;}
     .fire-particle:nth-child(5n+2) { left: 15%; animation-delay: 0.7s; animation-duration: 4.8s;}
     .fire-particle:nth-child(5n+3) { left: 25%; animation-delay: 1.2s; animation-duration: 4.2s;}
     .fire-particle:nth-child(5n+4) { left: 35%; animation-delay: 1.7s; animation-duration: 5.1s;}
     .fire-particle:nth-child(5n)   { left: 50%; animation-delay: 2.0s; animation-duration: 5.1s;}
-    /* Responsividade */
-    @media (max-width: 600px) {
-      .logo-fire-container { height: 140px; max-width: 99vw; }
-      .fire-logo { max-width: 130px; }
-      .fire-container { width: 140px; height: 90px; }
-      .flame-red { width: 40px; height: 60px;}
-      .flame-orange { width: 30px; height: 40px;}
-      .flame-yellow { width: 20px; height: 30px;}
-      .flame-white { width: 12px; height: 18px;}
+    @media (max-width: 900px) {
+      .header-area { flex-direction: column; align-items: center; }
     }
+    @media (max-width: 600px) {
+      .header-area { gap: 0.5vw; margin-top: 2vw; }
+      .fire-visual { width: 140px; height: 140px; min-width: 100px; min-height: 100px;}
+      .fire-logo { width: 120px; height: 120px;}
+      .fire-container { width: 120px; height: 120px;}
+      .flame-red { width: 60px; height: 75px;}
+      .flame-orange { width: 40px; height: 50px;}
+      .flame-yellow { width: 28px; height: 36px;}
+      .flame-white { width: 18px; height: 22px;}
+    }
+
     /* Cardápio */
     .menu-container {
-      max-width: 700px;
-      margin: 0 auto 2.5rem auto;
-      background: rgba(22, 28, 44, 0.97);
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto 32px auto;
+      background: rgba(22, 28, 44, 0.94);
       border-radius: 1.2rem;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+      box-shadow: 0 8px 32px #000a 0.15;
       padding: 2.2rem 1.2rem 1.8rem 1.2rem;
       backdrop-filter: blur(2px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    h1, h2, h3 {
-      font-weight: 700;
+    h1 {
+      font-weight: 800;
       color: #fbbf24;
-      margin-bottom: 0.7em;
+      margin-bottom: 0.5em;
       text-align: center;
       letter-spacing: 1px;
       text-shadow: 0 2px 8px #0f172a66;
+      font-size: 2.1rem;
     }
     h2 {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
+      color: #fbbf24;
       margin-top: 2.5rem;
+      margin-bottom: 0.7em;
       border-bottom: 2px solid #f58518;
       padding-bottom: 0.2em;
       text-align: left;
+      width: 100%;
+      max-width: 700px;
+      letter-spacing: 1px;
     }
     .menu-table {
       width: 100%;
+      max-width: 700px;
       border-collapse: collapse;
       margin-bottom: 1.5rem;
+      background: transparent;
     }
     .menu-table th, .menu-table td {
       padding: 0.6em 0.5em;
-      font-size: 1.06em;
+      font-size: 1.07em;
       text-align: left;
     }
     .menu-table th {
@@ -182,6 +220,8 @@
     }
     .menu-section {
       margin-bottom: 2.5rem;
+      width: 100%;
+      max-width: 700px;
     }
     .menu-highlight {
       background: #f58518;
@@ -202,11 +242,14 @@
       text-align: center;
       font-size: 1.1em;
       margin: 1.2em 0;
+      width: 100%;
+      max-width: 700px;
     }
     .adicionais-table {
       width: 100%;
       margin-top: 1.2em;
       border-collapse: collapse;
+      max-width: 550px;
     }
     .adicionais-table td {
       color: #f8fafc;
@@ -220,6 +263,8 @@
     }
     .bebidas-section {
       margin-top: 2.5rem;
+      width: 100%;
+      max-width: 700px;
     }
     .bebidas-title {
       background: #f58518;
@@ -258,6 +303,8 @@
       font-size: 1.05em;
       margin: 1.5em 0 1em 0;
       box-shadow: 0 2px 8px #dc143c33;
+      width: 100%;
+      max-width: 700px;
     }
     .delivery {
       text-align: center;
@@ -270,114 +317,115 @@
       font-weight: bold;
       margin-left: 0.3em;
     }
+    .footer {
+      text-align: center;
+      color: #fbbf24;
+      font-weight: 500;
+      font-size: 1.1em;
+      margin: 2em 0 1em 0;
+      width: 100%;
+    }
     /* Scrollbar customizada */
     ::-webkit-scrollbar { width: 8px; background: #1e293b;}
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 8px;}
   </style>
 </head>
 <body>
-  <!-- Logo com animação de fogo -->
-  <div class="logo-fire-container">
-    <img src="https://raw.githubusercontent.com/lucasricardocs/clips_dashboard/main/logo.png" class="fire-logo" alt="Clip's Burger Logo">
-    <div class="fire-container">
-      <div class="flame flame-red"></div>
-      <div class="flame flame-orange"></div>
-      <div class="flame flame-yellow"></div>
-      <div class="flame flame-white"></div>
-      <div class="fire-particle small"></div>
-      <div class="fire-particle small"></div>
-      <div class="fire-particle small"></div>
-      <div class="fire-particle small"></div>
-      <div class="fire-particle small"></div>
-      <div class="fire-particle medium"></div>
-      <div class="fire-particle medium"></div>
-      <div class="fire-particle medium"></div>
-      <div class="fire-particle medium"></div>
-      <div class="fire-particle medium"></div>
-      <div class="fire-particle large"></div>
-      <div class="fire-particle large"></div>
-      <div class="fire-particle large"></div>
-      <div class="fire-particle large"></div>
-      <div class="fire-particle large"></div>
+  <div class="header-area">
+    <div class="fire-visual">
+      <img src="https://raw.githubusercontent.com/lucasricardocs/clips_dashboard/main/logo.png" class="fire-logo" alt="Clip's Burger Logo">
+      <div class="fire-container">
+        <div class="flame flame-red"></div>
+        <div class="flame flame-orange"></div>
+        <div class="flame flame-yellow"></div>
+        <div class="flame flame-white"></div>
+        <div class="fire-particle small"></div>
+        <div class="fire-particle small"></div>
+        <div class="fire-particle small"></div>
+        <div class="fire-particle small"></div>
+        <div class="fire-particle small"></div>
+        <div class="fire-particle medium"></div>
+        <div class="fire-particle medium"></div>
+        <div class="fire-particle medium"></div>
+        <div class="fire-particle medium"></div>
+        <div class="fire-particle medium"></div>
+        <div class="fire-particle large"></div>
+        <div class="fire-particle large"></div>
+        <div class="fire-particle large"></div>
+        <div class="fire-particle large"></div>
+        <div class="fire-particle large"></div>
+      </div>
+    </div>
+    <div>
+      <h1>Clip's Burger</h1>
+      <div class="delivery">
+        Delivery:<span>62 98157-6704</span>
+      </div>
+      <span class="promo">PROMOÇÃO! Na compra de 3 X-TUDO, grátis 1 refrigerante 1L</span>
     </div>
   </div>
 
   <div class="menu-container">
-    <div class="delivery">
-      Delivery:<span>62 98157-6704</span>
-    </div>
-    <span class="promo">PROMOÇÃO! Na compra de 3 X-TUDO, grátis 1 refrigerante 1L</span>
-
     <!-- Sanduíches com Hambúrguer -->
-    <div class="menu-section">
-      <span class="menu-highlight">Sanduíches com Hambúrguer</span>
-      <table class="menu-table">
-        <tr><th>Nome</th><th>Descrição</th><th class="price">Preço</th></tr>
-        <tr><td>X-Salada Simples</td><td>Pão, hambúrguer, presunto, muçarela, salada, milho e batata</td><td class="price">18,00</td></tr>
-        <tr><td>X-Salada Especial</td><td>Pão, hambúrguer, ovo, presunto, muçarela, salada, milho e batata</td><td class="price">20,00</td></tr>
-        <tr><td>X-Especial Duplo</td><td>Pão, 2 hambúrgueres, ovo, muçarela, presunto, salada, milho e batata</td><td class="price">24,00</td></tr>
-        <tr><td>X-Bacon Simples</td><td>Pão, hambúrguer, bacon, presunto, muçarela, salada, milho e batata</td><td class="price">22,00</td></tr>
-        <tr><td>X-Bacon Especial</td><td>Pão, hambúrguer, bacon, ovo, presunto, muçarela, salada, milho e batata</td><td class="price">24,00</td></tr>
-        <tr><td>X-Bacon Especial Duplo</td><td>Pão, 2 hambúrgueres, bacon, ovo, muçarela, presunto, salada, milho e batata</td><td class="price">28,00</td></tr>
-        <tr><td>X-Tudo</td><td>Pão, hambúrguer, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</td><td class="price">27,00</td></tr>
-        <tr><td>X-Hamburgão</td><td>Pão, 2 hambúrgueres, bacon, ovo, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</td><td class="price">35,00</td></tr>
-        <tr><td>X-Mata Fome</td><td>Pão, 2 hambúrgueres, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</td><td class="price">39,00</td></tr>
-      </table>
-    </div>
+    <h2>Sanduíches com Hambúrguer</h2>
+    <table class="menu-table">
+      <tr><th>Nome</th><th>Descrição</th><th class="price">Preço</th></tr>
+      <tr><td>X-Salada Simples</td><td>Pão, hambúrguer, presunto, muçarela, salada, milho e batata</td><td class="price">18,00</td></tr>
+      <tr><td>X-Salada Especial</td><td>Pão, hambúrguer, ovo, presunto, muçarela, salada, milho e batata</td><td class="price">20,00</td></tr>
+      <tr><td>X-Especial Duplo</td><td>Pão, 2 hambúrgueres, ovo, muçarela, presunto, salada, milho e batata</td><td class="price">24,00</td></tr>
+      <tr><td>X-Bacon Simples</td><td>Pão, hambúrguer, bacon, presunto, muçarela, salada, milho e batata</td><td class="price">22,00</td></tr>
+      <tr><td>X-Bacon Especial</td><td>Pão, hambúrguer, bacon, ovo, presunto, muçarela, salada, milho e batata</td><td class="price">24,00</td></tr>
+      <tr><td>X-Bacon Especial Duplo</td><td>Pão, 2 hambúrgueres, bacon, ovo, muçarela, presunto, salada, milho e batata</td><td class="price">28,00</td></tr>
+      <tr><td>X-Tudo</td><td>Pão, hambúrguer, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</td><td class="price">27,00</td></tr>
+      <tr><td>X-Hamburgão</td><td>Pão, 2 hambúrgueres, bacon, ovo, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</td><td class="price">35,00</td></tr>
+      <tr><td>X-Mata Fome</td><td>Pão, 2 hambúrgueres, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</td><td class="price">39,00</td></tr>
+    </table>
 
     <!-- Sanduíches com Frango -->
-    <div class="menu-section">
-      <span class="menu-highlight">Sanduíches com Frango</span>
-      <table class="menu-table">
-        <tr><th>Nome</th><th>Descrição</th><th class="price">Preço</th></tr>
-        <tr><td>X-Frango Simples</td><td>Pão, filé de frango, presunto, muçarela, salada, milho e batata</td><td class="price">22,00</td></tr>
-        <tr><td>X-Frango Especial</td><td>Pão, filé de frango, ovo, presunto, muçarela, salada, milho e batata</td><td class="price">24,00</td></tr>
-        <tr><td>X-Frango Bacon</td><td>Pão, filé de frango, bacon, presunto, muçarela, salada, milho e batata</td><td class="price">27,00</td></tr>
-        <tr><td>X-Frango Tudo</td><td>Pão, filé de frango, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</td><td class="price">30,00</td></tr>
-        <tr><td>X-Frango Mata Fome</td><td>Pão, 2 filés de frango, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</td><td class="price">42,00</td></tr>
-      </table>
-    </div>
+    <h2>Sanduíches com Frango</h2>
+    <table class="menu-table">
+      <tr><th>Nome</th><th>Descrição</th><th class="price">Preço</th></tr>
+      <tr><td>X-Frango Simples</td><td>Pão, filé de frango, presunto, muçarela, salada, milho e batata</td><td class="price">22,00</td></tr>
+      <tr><td>X-Frango Especial</td><td>Pão, filé de frango, ovo, presunto, muçarela, salada, milho e batata</td><td class="price">24,00</td></tr>
+      <tr><td>X-Frango Bacon</td><td>Pão, filé de frango, bacon, presunto, muçarela, salada, milho e batata</td><td class="price">27,00</td></tr>
+      <tr><td>X-Frango Tudo</td><td>Pão, filé de frango, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</td><td class="price">30,00</td></tr>
+      <tr><td>X-Frango Mata Fome</td><td>Pão, 2 filés de frango, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</td><td class="price">42,00</td></tr>
+    </table>
 
     <div class="extras">EXTRAS: Abacaxi e Molho da Casa – R$ 2,00 cada</div>
 
     <!-- Sanduíches com Lombo -->
-    <div class="menu-section">
-      <span class="menu-highlight">Sanduíches com Lombo</span>
-      <table class="menu-table">
-        <tr><th>Nome</th><th>Descrição</th><th class="price">Preço</th></tr>
-        <tr><td>X-Lombo Simples</td><td>Pão, lombo, presunto, muçarela, salada, milho e batata</td><td class="price">23,00</td></tr>
-        <tr><td>X-Lombo Especial</td><td>Pão, lombo, ovo, presunto, muçarela, salada, milho e batata</td><td class="price">25,00</td></tr>
-        <tr><td>X-Lombo Bacon</td><td>Pão, lombo, bacon, ovo, presunto, muçarela, salada, milho e batata</td><td class="price">28,00</td></tr>
-        <tr><td>X-Lombo Tudo</td><td>Pão, lombo, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</td><td class="price">31,00</td></tr>
-        <tr><td>X-Lombo Mata Fome</td><td>Pão, 2 lombos, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</td><td class="price">43,00</td></tr>
-      </table>
-    </div>
+    <h2>Sanduíches com Lombo</h2>
+    <table class="menu-table">
+      <tr><th>Nome</th><th>Descrição</th><th class="price">Preço</th></tr>
+      <tr><td>X-Lombo Simples</td><td>Pão, lombo, presunto, muçarela, salada, milho e batata</td><td class="price">23,00</td></tr>
+      <tr><td>X-Lombo Especial</td><td>Pão, lombo, ovo, presunto, muçarela, salada, milho e batata</td><td class="price">25,00</td></tr>
+      <tr><td>X-Lombo Bacon</td><td>Pão, lombo, bacon, ovo, presunto, muçarela, salada, milho e batata</td><td class="price">28,00</td></tr>
+      <tr><td>X-Lombo Tudo</td><td>Pão, lombo, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</td><td class="price">31,00</td></tr>
+      <tr><td>X-Lombo Mata Fome</td><td>Pão, 2 lombos, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</td><td class="price">43,00</td></tr>
+    </table>
 
     <!-- Sanduíches com Filé -->
-    <div class="menu-section">
-      <span class="menu-highlight">Sanduíches com Filé</span>
-      <table class="menu-table">
-        <tr><th>Nome</th><th>Descrição</th><th class="price">Preço</th></tr>
-        <tr><td>X-Filé Simples</td><td>Pão, filé bovino, presunto, muçarela, salada, milho e batata</td><td class="price">28,00</td></tr>
-        <tr><td>X-Filé Especial</td><td>Pão, filé bovino, ovo, presunto, muçarela, salada, milho e batata</td><td class="price">30,00</td></tr>
-        <tr><td>X-Filé Bacon</td><td>Pão, filé bovino, bacon, ovo, presunto, muçarela, salada, milho e batata</td><td class="price">33,00</td></tr>
-        <tr><td>X-Filé Tudo</td><td>Pão, filé bovino, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</td><td class="price">36,00</td></tr>
-        <tr><td>X-Filé Mata Fome</td><td>Pão, 2 filés bovino, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</td><td class="price">43,00</td></tr>
-      </table>
-    </div>
+    <h2>Sanduíches com Filé</h2>
+    <table class="menu-table">
+      <tr><th>Nome</th><th>Descrição</th><th class="price">Preço</th></tr>
+      <tr><td>X-Filé Simples</td><td>Pão, filé bovino, presunto, muçarela, salada, milho e batata</td><td class="price">28,00</td></tr>
+      <tr><td>X-Filé Especial</td><td>Pão, filé bovino, ovo, presunto, muçarela, salada, milho e batata</td><td class="price">30,00</td></tr>
+      <tr><td>X-Filé Bacon</td><td>Pão, filé bovino, bacon, ovo, presunto, muçarela, salada, milho e batata</td><td class="price">33,00</td></tr>
+      <tr><td>X-Filé Tudo</td><td>Pão, filé bovino, bacon, salsicha, ovo, presunto, muçarela, salada, milho e batata</td><td class="price">36,00</td></tr>
+      <tr><td>X-Filé Mata Fome</td><td>Pão, 2 filés bovino, 2 bacons, 2 ovos, 2 salsichas, 2 muçarelas, presunto, salada, milho e batata</td><td class="price">43,00</td></tr>
+    </table>
 
     <div class="extras">EXTRAS: Abacaxi, Cebola e Molho da Casa – R$ 2,00 cada</div>
 
     <!-- Adicionais -->
-    <div class="menu-section">
-      <span class="menu-highlight">Adicionais</span>
-      <table class="adicionais-table">
-        <tr><td>Hambúrguer</td><td class="price">8,00</td><td>Bacon</td><td class="price">6,00</td></tr>
-        <tr><td>Filé de frango</td><td class="price">12,00</td><td>Salsicha</td><td class="price">5,00</td></tr>
-        <tr><td>Filé Bovino</td><td class="price">15,00</td><td>Ovo</td><td class="price">5,00</td></tr>
-        <tr><td>Lombo</td><td class="price">12,00</td><td>Muçarela</td><td class="price">6,00</td></tr>
-      </table>
-    </div>
+    <h2>Adicionais</h2>
+    <table class="adicionais-table">
+      <tr><td>Hambúrguer</td><td class="price">8,00</td><td>Bacon</td><td class="price">6,00</td></tr>
+      <tr><td>Filé de frango</td><td class="price">12,00</td><td>Salsicha</td><td class="price">5,00</td></tr>
+      <tr><td>Filé Bovino</td><td class="price">15,00</td><td>Ovo</td><td class="price">5,00</td></tr>
+      <tr><td>Lombo</td><td class="price">12,00</td><td>Muçarela</td><td class="price">6,00</td></tr>
+    </table>
 
     <!-- Bebidas -->
     <div class="bebidas-section">
@@ -406,7 +454,7 @@
         <tr><td>Morango</td><td class="price">15,00</td></tr>
       </table>
     </div>
-    <div style="text-align:center; margin-top:2em; color:#fbbf24; font-weight:500; font-size:1.1em;">
+    <div class="footer">
       Volte Sempre!
     </div>
   </div>
