@@ -36,7 +36,7 @@
             width: 100%;
             max-width: 400px;
             overflow: visible !important;
-            z-index: 0;
+            z-index: 1;
         }
         /* Logo Principal - Z-INDEX ALTO E ANIMADA */
         .fire-logo {
@@ -50,7 +50,6 @@
             animation: logoFloat 3s ease-in-out infinite;
             display: block;
             margin: 0 auto;
-            z-index: 0;
         }
         /* Animação de Flutuação da Logo */
         @keyframes logoFloat {
@@ -71,7 +70,7 @@
             transform: translateX(-50%);
             width: 300px;
             height: 800px; /* Increased height to allow particles to rise higher */
-            z-index: 0;
+            z-index: 1;
             pointer-events: none;
             overflow: visible !important;
         }
@@ -129,12 +128,12 @@
         /* Animação das Partículas */
         @keyframes particle-rise-high {
             0% { bottom: 0px; opacity: 1; transform: translateX(0) scale(1); }
-            10% { bottom: 50px; opacity: 1; transform: translateX(calc(var(--random-x, -1) * 0.2)) scale(0.95); }
-            25% { bottom: 150px; opacity: 0.9; transform: translateX(calc(var(--random-x, -1) * 0.5)) scale(0.85); }
-            40% { bottom: 250px; opacity: 0.7; transform: translateX(calc(var(--random-x, -1) * 0.7)) scale(0.7); }
-            60% { bottom: 400px; opacity: 0.6; transform: translateX(var(--random-x, -1)) scale(0.6); }
-            80% { bottom: 600px; opacity: 0.3; transform: translateX(calc(var(--random-x, -1) * 1.2)) scale(0.4); }
-            100% { bottom: 800px; opacity: 0; transform: translateX(calc(var(--random-x, -1) * 1.5)) scale(0.1); }
+            10% { bottom: 50px; opacity: 1; transform: translateX(calc(var(--random-x, 0) * 0.2)) scale(0.95); }
+            25% { bottom: 150px; opacity: 0.9; transform: translateX(calc(var(--random-x, 0) * 0.5)) scale(0.85); }
+            40% { bottom: 250px; opacity: 0.7; transform: translateX(calc(var(--random-x, 0) * 0.7)) scale(0.7); }
+            60% { bottom: 400px; opacity: 0.6; transform: translateX(var(--random-x, 0)) scale(0.6); }
+            80% { bottom: 600px; opacity: 0.3; transform: translateX(calc(var(--random-x, 0) * 1.2)) scale(0.4); }
+            100% { bottom: 800px; opacity: 0; transform: translateX(calc(var(--random-x, 0) * 1.5)) scale(0.1); }
         }
         /* Estilos das Partículas */
         .fire-particle.small { width: 4px; height: 4px; background: radial-gradient(circle, #ff6347 0%, #ff4500 100%); box-shadow: 0 0 8px #ff6347; }
